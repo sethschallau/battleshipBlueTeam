@@ -1,11 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const { User, Game } = require('./models/models.js');
+const { User, Game } = require('./models/index.js');
+const gameRoutes = require('./routes/gameRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Connect to the local MongoDB instance and the battleship database
+//database
 mongoose
   .connect('mongodb://localhost/battleship', {
     useNewUrlParser: true,
@@ -18,16 +20,13 @@ mongoose
     console.error('Error connecting to MongoDB:', err);
   });
 
-// Create a new user as a proof of concept
-app.get('/create-user', async (req, res) => {
-  try {
-    const newUser = new User({ username: 'seth' });
-    await newUser.save();
-    res.send('User created successfully');
-  } catch (err) {
-    res.status(500).send('Error creating user:', err.message);
-  }
-});
+//middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+//routes  
+app.use('/games', gameRoutes);
+app.use('users', userRoutes);
 
 // Start the server
 app.listen(PORT, () => {

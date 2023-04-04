@@ -19,12 +19,16 @@ const GameSchema = new Schema({
       playerUserName: { type: String, required: true },
       positions: [
         {
-          x: { type: Number, required: true },
-          y: { type: Number, required: true },
+          coords: [
+            {
+              x: { type: Number, required: true },
+              y: { type: Number, required: true },
+            },
+          ],
           shipType: { type: String, required: true },
           direction: { type: String, enum: ['l', 'r', 'u', 'd'], required: true },
         },
-      ],
+      ],      
     },
   ],
   hits: [
