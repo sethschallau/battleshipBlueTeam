@@ -4,7 +4,9 @@
   "description": "Battleship game for CSC 510 Blue Team, Spring 2023",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "brew services start mongodb-community@6.0 & nodemon src/app.js",
+    "stop": "brew services stop mongodb-community@6.0"
   },
   "author": "",
   "license": "ISC",
