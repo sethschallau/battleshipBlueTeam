@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //routes  
 app.use('/games', gameRoutes);
-app.use('users', userRoutes);
+app.use('/users', userRoutes);
 
 // Start the server
 app.listen(PORT, () => {

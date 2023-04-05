@@ -1,4 +1,5 @@
 const { Game } = require('../models');
+const { User } = require('../models');
 
 exports.getGame = async (req, res) => {
   try {
@@ -68,26 +69,43 @@ exports.getActiveGames = async (req, res) => {
   exports.setPieces = async (req, res) => {
     try {
       const { gameId, username, ships } = req.body;
-  
       const game = await Game.findById(gameId);
+  
       if (!game) {
-        res.status(404).json({ message: 'Game not found' });
-        return;
+        return res.status(404).json({ message: 'Game not found' });
       }
   
-      const playerIndex = game.ships.findIndex((entry) => entry.playerUserName === username);
+      const playerIndex = game.players.findIndex(player => player.username === username);
+  
       if (playerIndex === -1) {
-        game.ships.push({ playerUserName: username, positions: ships });
-      } else {
-        game.ships[playerIndex].positions = ships;
+        return res.status(400).json({ message: 'Player not found in the game' });
       }
   
+      game.ships[playerIndex].positions = ships;
+  
+      // Check if both players have set their pieces
+      let allPlayersSet = true;
+      for (const ship of game.ships) {
+        if (ship.positions.length === 0) {
+          allPlayersSet = false;
+          break;
+        }
+      }
+  
+      // If both players have set their pieces, update the game status to 'playing'
+      if (allPlayersSet) {
+        game.status = 'playing';
+      }
+  
+      // Save the updated game to the database
       await game.save();
-      res.status(200).json(game);
+  
+      res.status(200).json({ message: 'Pieces set successfully', gameStatus: game.status });
     } catch (error) {
       res.status(500).json({ message: 'Error setting pieces', error });
     }
   };
+  
   
   exports.sendMissile = async (req, res) => {
     try {
@@ -131,11 +149,39 @@ exports.getActiveGames = async (req, res) => {
           game.misses[missIndex].coordinates.push(coordinate);
         }
       }
-  
+      game.currentPlayer = opponent;
       await game.save();
       res.status(200).json({ result: isHit ? 'hit' : 'miss' });
     } catch (error) {
       res.status(500).json({ message: 'Error sending missile', error });
+    }
+  };
+
+  exports.joinGame = async (req, res) => {
+    try {
+      const { gameId, username } = req.body;
+      const game = await Game.findById(gameId).populate('players');
+  
+      if (!game) {
+        return res.status(404).json({ message: 'Game not found' });
+      }
+  
+      if (game.players.length >= 2) {
+        return res.status(400).json({ message: 'Game already has two players' });
+      }
+  
+      const user = await User.findOne({ username });
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      game.players.push(user);
+      await game.save();
+  
+      res.status(200).json({ message: 'Player added successfully', game });
+    } catch (error) {
+      res.status(500).json({ message: 'Error joining game', error });
     }
   };
   
