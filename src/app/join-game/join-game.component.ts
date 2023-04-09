@@ -32,7 +32,7 @@ export class JoinGameComponent {
   }
 
   getActiveGames() {
-    var httpRequest = this.http.get<Game[]>(`${this.apiUrl}/active`)
+    var httpRequest = this.http.get<Game[]>(`${this.apiUrl}/games/active`)
     httpRequest.subscribe(
       returnedGames => {
         console.log(returnedGames);
