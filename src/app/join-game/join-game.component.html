@@ -1,1 +1,7 @@
-<p>join-game works!</p>
+<div class="jumbotron">
+    <h1 class="display-4">Join a Game!</h1>
+</div>
+
+<ul class="list-group" *ngFor="let game of activeGames">
+    <li class="list-group-item">{{game.createdBy}}</li>
+</ul>

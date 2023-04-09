@@ -1,0 +1,12 @@
+<h3>Register</h3>
+<form #registrationForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" required id="username" name="username" #username="ngModel" [(ngModel)]="user.username" class="form-control" />
+        <div [hidden]="username.valid || username.pristine" class="alert alert-danger">Username is required.</div>
+    </div>
+    <div class="form-group">
+        <button [disabled]="!registrationForm.form.valid" class="btn btn-primary">Register</button>
+        <a routerLink="/login" class="btn btn-link">Cancel</a>
+    </div>
+</form>

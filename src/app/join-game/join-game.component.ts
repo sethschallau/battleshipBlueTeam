@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Game } from '../_models/game';
+import { User } from '../_models/user';
+import { AccountService } from '../_security/account.service';
 
 @Component({
   selector: 'app-join-game',
@@ -12,11 +13,16 @@ import { Game } from '../_models/game';
 export class JoinGameComponent {
 
   activeGames: Game[];
+  user: User;
   apiUrl: string = environment.apiUrl
   IdParamSubscription: Subscription
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) { }
-
+  constructor(private http: HttpClient, private accountService: AccountService) {
+    let checkUser = this.accountService.currentUserValue;
+    if (checkUser) {
+      this.user = checkUser;
+   }
+  }
   ngOnInit(): void {
       this.getActiveGames();
   }

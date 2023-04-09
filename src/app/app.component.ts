@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-//import { NavigationEnd, Router } from '@angular/router';
-//import { AccountService, Roles, User } from './_security';
+import { NavigationEnd, Router } from '@angular/router';
+import { User } from './_models/user';
+import { AccountService } from './_security/account.service';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +9,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'battleship';
-  //currentUser: User;
-  // loginPage: boolean
+  currentUser: User | null;
+  loginPage: boolean
 
-  /** 
   constructor(
       private router: Router,
       private accountService: AccountService
@@ -32,5 +32,5 @@ export class AppComponent {
       this.accountService.logout();
       this.router.navigate(['/login']);
   }
-  */
+ 
 }

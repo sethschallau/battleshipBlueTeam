@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-// import { LoginComponent } from './RegisterLogin/login/login.component';
-// import { RegisterComponent } from './RegisterLogin/register/register.component';
+import { LoginComponent } from './RegisterLogin/login/login.component';
+import { RegisterComponent } from './RegisterLogin/register/register.component';
 import { FormsModule } from '@angular/forms';
 import { GameComponent } from './game/game.component';
 import { Player } from './player/player.component';
@@ -21,8 +21,8 @@ import { JoinGameComponent } from './join-game/join-game.component';
 @NgModule({
   declarations: [
     AppComponent,
-    //LoginComponent,
-    //RegisterComponent,
+    LoginComponent,
+    RegisterComponent,
     GameComponent,
     Player,
     Board,

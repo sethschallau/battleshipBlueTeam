@@ -4,6 +4,10 @@
         padding: 50px;
       }
 
+    .container-fluid {
+      padding-top: 15px;
+    }
+
     .battleship-tile {
       color: black;
     }
@@ -59,3 +63,14 @@
     .dropdown-menu a {
       color: #563D76;
     }
+
+    .jumbotron {
+      background-color: #563d76c1;
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    .jumbotron h1 {
+      color: white;
+    }
+    
