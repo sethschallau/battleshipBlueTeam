@@ -12,7 +12,8 @@ Blue Team's Battleship game for CSC 520 final project.
 ## Setup
 1. I believe you should be able to simple npm install in the root directory of the project.
 2. Make sure MongoDB has started. I have problems starting it occasionally on Ubuntu, dm me and I can send you a helpful link.
-3. run: nodemon app.js
+3. Navigate to src folder
+4. run: nodemon app.js
 
 ## Run Frontend
 1. To build: ng build

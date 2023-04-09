@@ -25,13 +25,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "../node_modules/bulma/css/bulma.css",
-              "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css",
-              "src/bootstrap.min.css"
+              "node_modules/bulma/css/bulma.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "src/bootstrap.min.css",
+              "src/styles.css"
             ],
             "scripts": [
-              "../node_modules/pusher-js/dist/web/pusher.min.js"
+              "node_modules/pusher-js/dist/web/pusher.min.js"
             ]
           },
           "configurations": {
@@ -92,9 +92,14 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bulma/css/bulma.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "src/bootstrap.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/pusher-js/dist/web/pusher.min.js"
+            ]
           }
         }
       }
