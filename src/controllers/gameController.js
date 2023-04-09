@@ -28,19 +28,32 @@ exports.getActiveGames = async (req, res) => {
 };
 
 
-  exports.createGame = async (req, res) => {
-    try {
-      const newGame = new Game({
-        status: 'waiting',
-        players: [req.body.player],
-        currentPlayer: req.body.player,
-      });
-      await newGame.save();
-      res.status(201).json(newGame);
-    } catch (error) {
-      res.status(500).json({ message: 'Error creating game', error });
+exports.createGame = async (req, res) => {
+  try {
+    const username = req.body.username;
+    const user = await User.findOne({ username: username });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
-  };
+
+    const newGame = new Game({
+      status: 'waiting',
+      players: [user._id],
+      currentPlayer: user._id,
+    });
+
+    await newGame.save();
+
+    user.games.push(newGame);
+    await user.save();
+
+    res.status(201).json(newGame);
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating a new game', error });
+  }
+};
+
   
   // This is the format we should use for set pieces:
   // {

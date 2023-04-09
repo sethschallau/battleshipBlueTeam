@@ -15,6 +15,13 @@ Blue Team's Battleship game for CSC 520 final project.
 3. Navigate to src folder
 4. run: nodemon app.js
 
+## Add Sample Posts to populate users and games and fetch them
+- curl -X POST -H "Content-Type: application/json" -d '{"username": "seth"}' http://localhost:3000/users/create
+- curl -X POST -H "Content-Type: application/json" -d '{"username": "seth"}' http://localhost:3000/games/create
+
+- curl -X GET http://localhost:3000/users
+- curl -X GET http://localhost:3000/games/active
+
 ## Run Frontend
 1. To build: ng build
 2. To run and launch: ng serve --open
