@@ -1,1 +1,61 @@
-/* You can add global styles to this file, and also import other style files */
+    /* ./src/styles.css */
+
+    .container {
+        padding: 50px;
+      }
+
+    .battleship-tile {
+      color: black;
+    }
+    .win {
+      background-color: #23d160;
+      color: #fff;
+    }
+    .fail {
+      background-color: #ff3860;
+      color: #fff;
+    }
+    .content table td, .content table th {
+        border: 1px solid #dbdbdb;
+        padding: 0.5em 0.75em;
+        vertical-align: middle;
+        height: 50px;
+        text-align: center;
+    }
+    .content table {
+      width: 80%;
+      margin: 0 auto;
+    }
+    .content table tr:hover {
+        background-color: transparent;
+    }
+    .battleship-tile:hover {
+      cursor: pointer;
+    }
+
+    .navbar {
+      display: flex;
+      flex-direction: row;
+      height: 60px;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .nav-item:hover {
+      background-color: #563d76c1;
+    }
+
+    a, a:link, a:hover, a:visited, a:active {
+      color: white;
+      text-decoration: none;
+    }
+
+    .dropdown-menu {
+      width: auto;
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+
+    .dropdown-menu a {
+      color: #563D76;
+    }
