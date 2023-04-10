@@ -7,6 +7,7 @@ import { AccountService } from 'src/app/_security/account.service';
 export class LoginComponent implements OnInit {
     returnUrl: string;
     user: User;
+    showErrorMessage: boolean;
 
     constructor(private route: ActivatedRoute, private router: Router, private accountService: AccountService) {
         if (this.accountService.currentUserValue) {
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this.initializeUser();
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        this.showErrorMessage = false;
     }
 
     initializeUser() {
@@ -24,9 +26,12 @@ export class LoginComponent implements OnInit {
     }
 
     submitForm() {
-        this.accountService.login(this.user).subscribe(
-                _ => {
+        this.accountService.login(this.user).subscribe({
+                next: () => {
                     this.router.navigate([this.returnUrl]);
-                });
+                    
+                },
+                error: () => { this.showErrorMessage = true; }
+        });
     }
 }

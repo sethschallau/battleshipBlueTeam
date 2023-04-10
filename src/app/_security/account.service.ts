@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -27,13 +27,15 @@ export class AccountService {
         return this.currentUserSubject.value;
     }
 
-    register(username: string) {
-        console.log(username);
-        return this.http.post(`${environment.apiUrl}/users/create`, username);
+    register(user: User) {
+        return this.http.post(`${environment.apiUrl}/users/create`, user);
     }
 
     login(user: User) {
-        return this.http.get<User>(`${environment.apiUrl}/users`)
+       
+        const params = new HttpParams().append("username", user.username);
+        return this.http.get<User>(`${environment.apiUrl}/users/user`, {params})
+
             .pipe(map(user => {
                 if (user) {
                     localStorage.setItem('currentUser', JSON.stringify(user));

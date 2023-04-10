@@ -16,12 +16,15 @@ export class RegisterComponent implements OnInit {
     ngOnInit() {
         this.initializeUser();
     }
+
     initializeUser() {
         this.user = new User;
+        this.user.wins = 0;
+        this.user.games = [];
     }
 
     onSubmit() {
-        this.accountService.register(this.user.username)
+        this.accountService.register(this.user)
             .pipe(first())
             .subscribe(
                 _ => {

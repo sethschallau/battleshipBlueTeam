@@ -16,14 +16,10 @@ export class NewGameComponent {
   apiUrl: string = environment.apiUrl
 
   constructor(private http: HttpClient, private accountService: AccountService) {
-/*     let checkUser = this.accountService.currentUserValue;
+    let checkUser = this.accountService.currentUserValue;
     if (checkUser) {
       this.user = checkUser;
-   } */
-    this.user = new User;
-    this.user.username = "Kaylie";
-    this.user.games = [];
-    this.user.wins = 0;
+   }
   }
 
   ngOnInit(): void {
@@ -43,7 +39,7 @@ export class NewGameComponent {
   }
 
   postGame() {
-    var httpRequest = this.http.post<Game>(`${this.apiUrl}/games/create`, this.user.username)
+    var httpRequest = this.http.post<Game>(`${this.apiUrl}/games/create`, this.user)
     httpRequest.subscribe(
       returnedGame => {
         this.newGame = returnedGame;

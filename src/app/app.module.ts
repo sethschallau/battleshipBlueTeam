@@ -14,9 +14,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { Board } from './game/board/board.component';
 import { HomeComponent } from './home/home.component';
 import { Tile } from './game/tile/tile.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NewGameComponent } from './new-game/new-game.component';
 import { JoinGameComponent } from './join-game/join-game.component';
+import { ErrorInterceptor } from './_security/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,9 @@ import { JoinGameComponent } from './join-game/join-game.component';
     BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [ 
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
