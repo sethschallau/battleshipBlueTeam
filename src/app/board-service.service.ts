@@ -1,6 +1,6 @@
     import { Injectable } from '@angular/core';
     import { Board } from './game/board/board.component';
-    import { Player } from './player/player.component';
+    import { Player } from './user/player.component';
     import { Tile } from './game/tile/tile.component';
 
     @Injectable()

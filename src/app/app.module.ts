@@ -9,7 +9,7 @@ import { LoginComponent } from './RegisterLogin/login/login.component';
 import { RegisterComponent } from './RegisterLogin/register/register.component';
 import { FormsModule } from '@angular/forms';
 import { GameComponent } from './game/game.component';
-import { Player } from './player/player.component';
+import { Player } from './user/player.component';
 import { ToastrModule } from 'ngx-toastr';
 import { Board } from './game/board/board.component';
 import { HomeComponent } from './home/home.component';

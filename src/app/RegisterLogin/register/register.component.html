@@ -6,7 +6,7 @@
         <div [hidden]="username.valid || username.pristine" class="alert alert-danger">Username is required.</div>
     </div>
     <div class="form-group">
-        <button [disabled]="!registrationForm.form.valid" class="btn btn-primary">Register</button>
-        <a routerLink="/login" class="btn btn-link">Cancel</a>
+        <button [disabled]="!registrationForm.form.valid" class="btn btn-outline-primary">Register</button>
+        <a routerLink="/login" class="btn btn-outline-primary">Cancel</a>
     </div>
 </form>

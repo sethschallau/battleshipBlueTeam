@@ -3,12 +3,12 @@
     <form #loginForm="ngForm" (ngSubmit)="submitForm()">
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" required id="username" name="username" #credentials="ngModel" [(ngModel)]="username" class="form-control" />
+            <input type="text" required id="username" name="username" #credentials="ngModel" [(ngModel)]="user.username" class="form-control" />
             <div [hidden]="credentials.valid || credentials.pristine" class="alert alert-danger">Username is required.</div>
         </div>
         <div class="form-group">
-            <button type="submit" [disabled]="!loginForm.form.valid" class="btn login-btn">Login</button>
-            <a routerLink="/register" class="btn">Register</a>
+            <button type="submit" [disabled]="!loginForm.form.valid" class="btn btn-outline-primary">Login</button>
+            <a routerLink="/register" class="btn btn-outline-primary">Register</a>
         </div>
     </form>
 </div>

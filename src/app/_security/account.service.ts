@@ -27,21 +27,22 @@ export class AccountService {
         return this.currentUserSubject.value;
     }
 
-    register(user: User) {
-        return this.http.post(`${environment.apiUrl}/users/create`, user);
+    register(username: string) {
+        console.log(username);
+        return this.http.post(`${environment.apiUrl}/users/create`, username);
     }
 
-    login(username: string) {
+    login(user: User) {
         return this.http.get<User>(`${environment.apiUrl}/users`)
             .pipe(map(user => {
                 if (user) {
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     this.currentUserSubject.next(user);
-                    this.username = username;
+                    this.username = user.username;
                 }
                 return user;
             }));
-    }
+          }
 
     logout() {
         localStorage.removeItem('currentUser');

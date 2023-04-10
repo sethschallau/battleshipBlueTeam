@@ -15,7 +15,6 @@ export class JoinGameComponent {
   activeGames: Game[];
   user: User;
   apiUrl: string = environment.apiUrl
-  IdParamSubscription: Subscription
 
   constructor(private http: HttpClient, private accountService: AccountService) {
     let checkUser = this.accountService.currentUserValue;
@@ -28,7 +27,6 @@ export class JoinGameComponent {
   }
 
   ngOnDestroy() {
-    this.IdParamSubscription.unsubscribe();
 }
   
   submitForm() {

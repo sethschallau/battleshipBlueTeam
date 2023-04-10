@@ -18,12 +18,10 @@ export class RegisterComponent implements OnInit {
     }
     initializeUser() {
         this.user = new User;
-        this.user.games = [];
-        this.user.wins = 0;
     }
 
     onSubmit() {
-        this.accountService.register(this.user)
+        this.accountService.register(this.user.username)
             .pipe(first())
             .subscribe(
                 _ => {

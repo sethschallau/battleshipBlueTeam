@@ -14,13 +14,16 @@ export class NewGameComponent {
   newGame: Game;
   user: User;
   apiUrl: string = environment.apiUrl
-  IdParamSubscription: Subscription
 
   constructor(private http: HttpClient, private accountService: AccountService) {
-    let checkUser = this.accountService.currentUserValue;
+/*     let checkUser = this.accountService.currentUserValue;
     if (checkUser) {
       this.user = checkUser;
-   }
+   } */
+    this.user = new User;
+    this.user.username = "Kaylie";
+    this.user.games = [];
+    this.user.wins = 0;
   }
 
   ngOnInit(): void {
@@ -32,15 +35,14 @@ export class NewGameComponent {
   }
 
   ngOnDestroy() {
-    this.IdParamSubscription.unsubscribe();
 }
+
   submitForm() {
     this.postGame();
     // wait for player to join...
   }
 
   postGame() {
-    console.log(this.user.username);
     var httpRequest = this.http.post<Game>(`${this.apiUrl}/games/create`, this.user.username)
     httpRequest.subscribe(
       returnedGame => {
