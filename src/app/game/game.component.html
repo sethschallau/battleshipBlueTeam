@@ -1,0 +1,46 @@
+<div class="section">
+  <div class="container">
+    <div class="content">
+      <h1 class="title">Ready to sink some battleships?</h1>
+      <hr>
+
+      <!-- shows when a player has won the game -->
+      <section *ngIf="winner" class="notification is-success has-text-centered" style="color:white">
+        <h1>Player {{ winner.player.username }} has won the game!</h1>
+      </section>
+
+      <!-- shows while waiting for 2nd user to join -->
+      <div *ngIf="players < 2">
+        <h2>Waiting for another user to join...</h2>
+      </div>
+
+      <!-- loops through the boards array and displays the player and board tiles -->
+      <div class="columns">
+        <div class="column has-text-centered" *ngFor="let board of boards; let i = index">
+          <h5>
+            PLAYER {{ board.player.username }} <span class="tag is-info" *ngIf="i == player">You</span>
+            // <strong>SCORE: {{ board.player.score }}</strong>
+          </h5>
+          <table class="is-bordered" [style.opacity] = "i == player ? 0.5 : 1">
+            <tr *ngFor="let row of board.tiles; let j = index">
+              <td *ngFor="let col of row; let k = index"
+              (click) = "fireTorpedo($event)"
+              [style.background-color] = "col.used ? '' : 'transparent'"
+              [class.win] = "col.status == 'win'" [class.fail] = "col.status !== 'win'"
+              class="battleship-tile" id="t{{i}}{{j}}{{k}}">
+              {{ col.value == 1 ? 1 : 0 }}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="has-text-centered">
+      <span class="tag is-warning" *ngIf="canPlay">Your turn!</span>
+      <span class="tag is-danger" *ngIf="!canPlay">Other player's turn.</span>
+      <h5 class="title"><small>{{ players }} player(s) in game</small></h5>
+    </div>
+
+  </div>
+</div>
+  

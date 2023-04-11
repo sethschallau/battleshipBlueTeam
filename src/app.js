@@ -4,6 +4,7 @@ const { User, Game } = require('./models/index.js');
 const gameRoutes = require('./routes/gameRoutes');
 const userRoutes = require('./routes/userRoutes');
 
+var cors = require('cors')
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -23,6 +24,8 @@ mongoose
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors())
+
 
 //routes  
 app.use('/games', gameRoutes);

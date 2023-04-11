@@ -1,0 +1,17 @@
+<div class="login-wrapper">
+    <h3>Sign In</h3>
+    <form #loginForm="ngForm" (ngSubmit)="submitForm()">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" required id="username" name="username" #credentials="ngModel" [(ngModel)]="user.username" class="form-control" />
+            <div [hidden]="credentials.valid || credentials.pristine" class="alert alert-danger">Username is required.</div>
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="showErrorMessage">
+            Invalid username
+        </div>
+        <div class="form-group">
+            <button type="submit" [disabled]="!loginForm.form.valid" class="btn btn-outline-primary">Login</button>
+            <a routerLink="/register" class="btn btn-outline-primary">Register</a>
+        </div>
+    </form>
+</div>
