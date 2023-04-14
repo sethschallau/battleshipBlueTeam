@@ -191,6 +191,9 @@ exports.createGame = async (req, res) => {
   
       game.players.push(user);
       await game.save();
+      
+      user.games.push(game);
+      await user.save();
   
       res.status(200).json({ message: 'Player added successfully', game });
     } catch (error) {
