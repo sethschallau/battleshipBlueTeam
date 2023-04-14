@@ -89,3 +89,11 @@
       color: white;
       border-color:#563D76;
     }
+
+    .join-game-option:hover {
+      cursor: pointer;
+    }
+
+    .input-group-text {
+      justify-content: space-around;
+    }
