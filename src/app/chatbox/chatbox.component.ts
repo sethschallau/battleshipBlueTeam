@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import Pusher from 'pusher-js';
+import { AccountService } from '../_security/account.service';
 
 @Component({
   selector: 'app-chatbox',
@@ -8,16 +9,19 @@ import Pusher from 'pusher-js';
   styleUrls: ['./chatbox.component.css']
 })
 export class ChatboxComponent implements OnInit {
-  username = 'username';
-  message = '';
+
+  username: String;
+  message: String = '';
   messages = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private accountService: AccountService) {
+    let checkUser = this.accountService.currentUserValue;
+    if (checkUser) {
+      this.username = checkUser.username;
+   }
   }
 
   ngOnInit(): void {
-    console.log("WORKING!!");
-
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
@@ -25,29 +29,13 @@ export class ChatboxComponent implements OnInit {
       cluster: 'mt1'
     });
 
-    var channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', function(data) {
+    const channel = pusher.subscribe('chat');
+    channel.bind('message', data => {
       this.messages.push(data);
-      alert(JSON.stringify(data));
     });
-
-
-    // // Enable pusher logging - don't include this in production
-    // Pusher.logToConsole = true;
-
-    // const pusher = new Pusher('3c6bb27ad7d79b21eb8a', {
-    //   cluster: 'mt1'
-    // });
-
-    // const channel = pusher.subscribe('chat');
-    // channel.bind('message', function(data) {
-    //   this.messages.push(data);
-    // });
   }
 
-
   submit(): void{
-    console.log(this.message);
     this.http.post('http://localhost:3000/chat', {
       username: this.username,
       message: this.message
