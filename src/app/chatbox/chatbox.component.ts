@@ -29,8 +29,8 @@ export class ChatboxComponent implements OnInit {
       cluster: 'mt1'
     });
 
-    const channel = pusher.subscribe('chat');
-    channel.bind('message', data => {
+    const channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', data => {
       this.messages.push(data);
     });
   }

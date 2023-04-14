@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 
 router.post('/', ( req, res) => {
     pusher.trigger("my-channel", "my-event", {
-        message: "hello world"
+        message: req.body.message
     });
 
     return res.json({ success: true, message: 'Thanks! IT WORKED!!!'});
