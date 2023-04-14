@@ -34,7 +34,7 @@ import { CurrentGamesComponent } from './current-games/current-games.component';
     Tile,
     NewGameComponent,
     JoinGameComponent,
-    ChatboxComponent
+    ChatboxComponent,
     SetShipsComponent,
     CurrentGamesComponent
   ],
