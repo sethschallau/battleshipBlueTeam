@@ -16,6 +16,7 @@ export class ChatboxComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("WORKING!!");
 
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
@@ -46,6 +47,7 @@ export class ChatboxComponent implements OnInit {
 
 
   submit(): void{
+    console.log(this.message);
     this.http.post('http://localhost:3000/chat', {
       username: this.username,
       message: this.message
