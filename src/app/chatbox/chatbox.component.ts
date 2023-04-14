@@ -16,21 +16,37 @@ export class ChatboxComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
-    const pusher = new Pusher('25291c0752d6089a660c', {
-      cluster: 'eu'
+    var pusher = new Pusher('c6ebd2b1c5fa25e580cd', {
+      cluster: 'mt1'
     });
 
-    const channel = pusher.subscribe('chat');
-    channel.bind('message', data => {
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
       this.messages.push(data);
+      alert(JSON.stringify(data));
     });
+
+
+    // // Enable pusher logging - don't include this in production
+    // Pusher.logToConsole = true;
+
+    // const pusher = new Pusher('3c6bb27ad7d79b21eb8a', {
+    //   cluster: 'mt1'
+    // });
+
+    // const channel = pusher.subscribe('chat');
+    // channel.bind('message', function(data) {
+    //   this.messages.push(data);
+    // });
   }
 
 
   submit(): void{
-    this.http.post('http://localhost:8000/api/messages', {
+    this.http.post('http://localhost:3000/chat', {
       username: this.username,
       message: this.message
     }).subscribe(() => this.message = '');
