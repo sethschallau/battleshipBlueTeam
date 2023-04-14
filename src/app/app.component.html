@@ -1,13 +1,14 @@
 <nav class="navbar navbar-dark" style="background-color: #563D76;">
   <a class="nav-item nav-link" routerLink="/home">Home</a>
+  <a class="nav-item nav-link" routerLink="/current-games">My Games</a>
   <a class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Play!
+      New Game
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
       <a class="dropdown-item" routerLink="/new-game">Start New Game</a>
       <div class="dropdown-divider"></div>
-      <a class="dropdown-item" routerLink="/join-game">Join a Game</a>
+      <a class="dropdown-item" routerLink="/join-game">Join New Game</a>
     </div>
   </a>
   <a class="nav-item nav-link" (click)="logout()">Logout</a>

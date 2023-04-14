@@ -1,0 +1,15 @@
+<div class="jumbotron">
+    <h1 class="display-4">Your Current Active Games</h1>
+</div>
+
+<section *ngIf="!noGames">
+<ul class="list-group" *ngFor="let game of myGames">
+    <li class="list-group-item join-game-option"
+     (click)="openGame(game._id)">{{game.players[0].username}}
+    </li>
+</ul>
+</section>
+
+<section *ngIf="noGames">
+    <h3>Currently, you don't have any ongoing games. Try starting or joining a new one!</h3>
+</section>

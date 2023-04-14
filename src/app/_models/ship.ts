@@ -1,6 +1,9 @@
+import { Location } from "./location";
+
 export class Ship {
-    location: Location;
+    location: Location | null;
     type: string;
-    direction: string;
+    size: number;
     username: string;
+    direction: string;
 }

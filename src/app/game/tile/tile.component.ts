@@ -5,11 +5,12 @@ import { Component } from '@angular/core';
   templateUrl: './tile.component.html'
 })
 export class Tile {
-  used: boolean;
-  value: number;
+  shot: boolean;
+  ship: boolean;
   status: string;
   row: number;
   col: number;
+  value: string;
 
 
   constructor(values: Object = {}) {
