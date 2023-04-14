@@ -17,6 +17,7 @@ router.get('/', (req, res) => {
 
 router.post('/', ( req, res) => {
     pusher.trigger("my-channel", "my-event", {
+        username: req.body.username,
         message: req.body.message
     });
 
