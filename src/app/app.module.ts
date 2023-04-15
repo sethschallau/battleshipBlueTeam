@@ -36,7 +36,7 @@ import { CurrentGamesComponent } from './current-games/current-games.component';
     JoinGameComponent,
     ChatboxComponent,
     SetShipsComponent,
-    CurrentGamesComponent
+    CurrentGamesComponent,
   ],
   imports: [
     BrowserModule,
