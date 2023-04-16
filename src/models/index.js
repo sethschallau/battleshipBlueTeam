@@ -9,6 +9,18 @@ const UserSchema = new Schema({
   wins: { type: Number, default: 0 },
 });
 
+//Chat schema
+const ChatSchema = new Schema({
+  gameId: { type: Schema.Types.ObjectId, ref: 'Game'}, 
+  chats: [
+    {
+      playerUserName: { type: String, required: true },
+      imageFile: { type: String, required: true},
+      note: { type: String, required: true}
+    }
+  ]
+});
+
 // Game schema
 const GameSchema = new Schema({
   status: { type: String, enum: ['waiting', 'playing', 'completed', 'abandoned'], required: true },
@@ -47,5 +59,5 @@ const GameSchema = new Schema({
 
 const User = mongoose.model('User', UserSchema);
 const Game = mongoose.model('Game', GameSchema);
-
-module.exports = { User, Game };
+const Chat = mongoose.model('Chat', ChatSchema);
+module.exports = { User, Game, Chat };
