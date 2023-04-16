@@ -18,6 +18,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NewGameComponent } from './new-game/new-game.component';
 import { JoinGameComponent } from './join-game/join-game.component';
 import { ErrorInterceptor } from './_security/error.interceptor';
+import { SocketChatsComponent } from './socket-chats/socket-chats.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ErrorInterceptor } from './_security/error.interceptor';
     HomeComponent,
     Tile,
     NewGameComponent,
-    JoinGameComponent
+    JoinGameComponent,
+    SocketChatsComponent
   ],
   imports: [
     BrowserModule,
