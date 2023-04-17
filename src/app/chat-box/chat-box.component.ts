@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-chat-box',
@@ -13,6 +14,7 @@ export class ChatBoxComponent implements AfterViewInit {
   gameId: string = '';
   CloseChat:boolean = true;
   chatIsVisible:boolean = true;
+  items = Array.from({length: 100000}).map((_, i) => `Item #${i}`);
 
   constructor(private http: HttpClient, private elementRef: ElementRef) { }
 

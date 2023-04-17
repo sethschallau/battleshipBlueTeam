@@ -19,6 +19,7 @@ import { NewGameComponent } from './new-game/new-game.component';
 import { JoinGameComponent } from './join-game/join-game.component';
 import { ErrorInterceptor } from './_security/error.interceptor';
 import { ChatBoxComponent } from './chat-box/chat-box.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { ChatBoxComponent } from './chat-box/chat-box.component';
     HttpClientModule,
     CommonModule,
     BrowserAnimationsModule,
+    ScrollingModule,
     ToastrModule.forRoot()
   ],
   providers: [ 
