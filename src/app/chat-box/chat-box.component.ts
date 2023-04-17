@@ -40,6 +40,8 @@ export class ChatBoxComponent implements AfterViewInit {
       .subscribe(() => {
         this.ngAfterViewInit();
       });
+
+    this.newMessage = '';
   }
 
   sendTextMessage(): void {
@@ -53,6 +55,9 @@ export class ChatBoxComponent implements AfterViewInit {
       .subscribe(() => {
         this.ngAfterViewInit();
       });
+
+      this.newMessage = '';
+
   }
 
   closeForm(): void{
