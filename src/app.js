@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { User, Game } = require('./models/index.js');
 const gameRoutes = require('./routes/gameRoutes');
 const userRoutes = require('./routes/userRoutes');
-
+const chatRoutes = require('./routes/chatRoutes');
 var cors = require('cors')
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -30,7 +30,7 @@ app.use(cors())
 //routes  
 app.use('/games', gameRoutes);
 app.use('/users', userRoutes);
-
+app.use('/chats', chatRoutes);
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

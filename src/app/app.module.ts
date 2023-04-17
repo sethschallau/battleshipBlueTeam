@@ -20,6 +20,7 @@ import { JoinGameComponent } from './join-game/join-game.component';
 import { ErrorInterceptor } from './_security/error.interceptor';
 import { SetShipsComponent } from './game/set-ships/set-ships.component';
 import { CurrentGamesComponent } from './current-games/current-games.component';
+import { ChatBoxComponent } from './chat-box/chat-box.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { CurrentGamesComponent } from './current-games/current-games.component';
     NewGameComponent,
     JoinGameComponent,
     SetShipsComponent,
-    CurrentGamesComponent
+    CurrentGamesComponent,
+    ChatBoxComponent
   ],
   imports: [
     BrowserModule,
