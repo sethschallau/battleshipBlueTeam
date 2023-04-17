@@ -7,9 +7,12 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./chat-box.component.css'],
 })
 export class ChatBoxComponent implements AfterViewInit {
+
   messages: any[] = [];
   newMessage: string = '';
   gameId: string = '';
+  CloseChat:boolean = true;
+  chatIsVisible:boolean = true;
 
   constructor(private http: HttpClient, private elementRef: ElementRef) { }
 
@@ -24,21 +27,44 @@ export class ChatBoxComponent implements AfterViewInit {
     }, 0);
   }
 
-  sendMessage(): void {
+  sendMessage(imageName: string): void {
     this.http
       .post(`http://localhost:3000/chats/send`, {
         //you need to put the username of the current player in a DOM item with the id #yourUserName
         //needs to just grab from state later
         playerUserName: this.elementRef.nativeElement.querySelector('#yourUserName').textContent,
-        imageFile: 'n/a',
+        imageFile: imageName,
+        note: "NA",
+        gameId: this.gameId
+      })
+      .subscribe(() => {
+        this.ngAfterViewInit();
+      });
+
+    this.newMessage = '';
+  }
+
+  sendTextMessage(): void {
+    this.http
+      .post('http://localhost:3000/chats/send', {
+        playerUserName: this.elementRef.nativeElement.querySelector('#yourUserName').textContent,
+        imageFile: "NA",
         note: this.newMessage,
         gameId: this.gameId
       })
       .subscribe(() => {
-        this.newMessage = '';
         this.ngAfterViewInit();
       });
+
+      this.newMessage = '';
+
   }
-  //need a function for images, similar to sendMessage(), but changes imageFile depending
-  //on what was clicked.
+
+  closeForm(): void{
+    this.CloseChat = !this.CloseChat;
+    this.chatIsVisible = !this.chatIsVisible;
+  }
+  openForm(): void{
+    this.chatIsVisible = !this.chatIsVisible;
+  }
 }
