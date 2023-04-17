@@ -11,7 +11,7 @@ const UserSchema = new Schema({
 
 //Chat schema
 const ChatSchema = new Schema({
-  gameId: { type: Schema.Types.ObjectId, ref: 'Game'}, 
+  gameId: { type: String, ref: 'Game'}, 
   chats: [
     {
       playerUserName: { type: String, required: true },

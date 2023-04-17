@@ -1,5 +1,6 @@
 const { Game } = require('../models');
 const { User } = require('../models');
+const { Chat } = require('../models');
 
 exports.getGame = async (req, res) => {
   try {
@@ -43,7 +44,14 @@ exports.createGame = async (req, res) => {
       currentPlayer: user._id,
     });
 
-    await newGame.save();
+    const savedGame = await newGame.save();
+
+    const newChat = new Chat({
+      gameId: savedGame._id.toString(),
+      chats: []
+    });
+
+    await newChat.save();
 
     user.games.push(newGame);
     await user.save();
