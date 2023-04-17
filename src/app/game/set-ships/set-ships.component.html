@@ -8,9 +8,9 @@
         <div class="columns">
             <table class="is-bordered">
               <tr *ngFor="let row of board.tiles; let j = index">
-                <td *ngFor="let col of row; let k = index">
-                <button type="button" class="btn" data-toggle="modal" data-target="#shipPicker">
-                  </button>
+                <td *ngFor="let col of row; let k = index"
+                [style.background-color] = "col.ship ? 'blue' : 'transparent'"
+                class="battleship-tile" data-toggle="modal" data-target="#shipPicker">
                 <!-- Modal -->
                 <div class="modal fade" id="shipPicker" tabindex="-1" role="dialog" aria-labelledby="shipPickerLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
@@ -21,31 +21,31 @@
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
+                      <form #shipForm ="ngForm" (ngSubmit)="placeShip($event)">
                       <div class="modal-body">
                         <div class="list-group" *ngFor="let ship of remainingShips">
-                          <a class="list-group-item list-group-item-action" id="t{{j}}{{k}}{{ship.size}}{{ship.direction}}">
-                          {{ship.type}}</a>
+                          <button class="list-group-item list-group-item-action" id="t{{j}}{{k}}{{ship.size}}">
+                          {{ship.type}}</button>
                         </div>
                         <br>
                         <div class="direction-modal">
                           Direction of Ship: 
                             <div class="input-group-text">
-                            <div><input type="radio" aria-label="Direction"> Left </div> 
-                            <div><input type="radio" aria-label="Direction"> Right </div>
-                            <div><input type="radio" aria-label="Direction"> Up </div>
-                            <div><input type="radio" aria-label="Direction"> Down </div>
-
+                            <div><input type="radio" aria-label="Direction" id="l"> Left </div> 
+                            <div><input type="radio" aria-label="Direction" id="r"> Right </div>
+                            <div><input type="radio" aria-label="Direction" id="u"> Up </div>
+                            <div><input type="radio" aria-label="Direction" id="d"> Down </div>
                           </div>
                         </div>
-
+                        </div>
+                        </form>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" (click) = "placeShip($event)">Save changes</button>
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-outline-primary">Save changes</button>
                       </div>
                     </div>
                   </div>
-                </div>
               </td>
             </tr>
           </table>
