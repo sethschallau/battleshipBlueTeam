@@ -1,6 +1,18 @@
 <span id="gameId">643c8c139f46065d4f18ebb3</span>
 <span id="yourUserName">peat</span>
 
+
+<script>
+  function openForm() {
+document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+document.getElementById("myForm").style.display = "none";
+} 
+</script>
+
+
 <div class="chat-box">
     <div class="message-container">
         <ng-container *ngFor="let message of messages">
@@ -29,3 +41,20 @@
       <button (click)="sendTextMessage()">Send</button>
     </div>
   </div>
+
+
+
+
+  <button class="open-button" *ngIf="!chatIsVisible" (click)="openForm()">Chat</button>
+
+  <div class="chat-popup" id="myForm" *ngIf="chatIsVisible">
+    <form action="" class="form-container">
+      <h1>Chat</h1>
+  
+      <label for="msg"><b>Message</b></label>
+      <textarea placeholder="Type message.." name="msg" required></textarea>
+  
+      <button type="submit" class="btn">Send</button>
+      <button type="button" class="btn cancel" (click)="closeForm()">{{CloseChat?"Close":"Close"}}</button>
+    </form>
+  </div> 

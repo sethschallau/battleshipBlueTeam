@@ -11,6 +11,8 @@ export class ChatBoxComponent implements AfterViewInit {
   messages: any[] = [];
   newMessage: string = '';
   gameId: string = '';
+  CloseChat:boolean = true;
+  chatIsVisible:boolean = true;
 
   constructor(private http: HttpClient, private elementRef: ElementRef) { }
 
@@ -51,5 +53,13 @@ export class ChatBoxComponent implements AfterViewInit {
       .subscribe(() => {
         this.ngAfterViewInit();
       });
+  }
+
+  closeForm(): void{
+    this.CloseChat = !this.CloseChat;
+    this.chatIsVisible = !this.chatIsVisible;
+  }
+  openForm(): void{
+    this.chatIsVisible = !this.chatIsVisible;
   }
 }
