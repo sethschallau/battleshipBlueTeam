@@ -34,6 +34,12 @@ export class SetShipsComponent {
   finished: boolean;
   game: Game;
   user: User;
+  shipCol: number;
+  shipRow: number;
+  shipSize: number;
+  shipDirection: string;
+  shipName: string;
+  directions: string[] = ['l', 'r', 'u', 'd'];
 
   constructor(
     private toastr: ToastrService,
@@ -61,41 +67,37 @@ export class SetShipsComponent {
       this.idParamSubscription.unsubscribe();
   }
 
-  placeShip(e:any) {
-    let id = e.target.id,
-      row: number = parseInt(id.substring(1,2)), col: number = parseInt(id.substring(2,3)),
-      shipSize: number = parseInt(id.substring(3,4)),
-      direction: string = id.substring(4,5),
-      shipName: string = id.substring(5),
-      tile: Tile = this.board.tiles[row][col];
-      if (!this.checkValidShipPlacement(tile, shipSize, direction)) {
+  placeShip() {
+      let tile: Tile = this.board.tiles[this.shipRow][this.shipCol];
+    alert(this.shipName + " " + this.shipDirection + ": " + this.shipRow + ", " + this.shipCol)
+      if (!this.checkValidShipPlacement(tile, this.shipSize, this.shipDirection)) {
         return;
       }
-      switch (direction) {
+      switch (this.shipDirection) {
         case('r'):
-          for (let i = col; i <= (shipSize + col); i++) {
-            this.board.tiles[row][i].ship = true;
+          for (let i = this.shipCol; i <= (this.shipSize + this.shipCol); i++) {
+            this.board.tiles[this.shipRow][i].ship = true;
           }
         break;
         case('l'):
-          for (let i = col; i > (col - shipSize); i--) {
-            this.board.tiles[row][i].ship = true;
+          for (let i = this.shipCol; i > (this.shipCol - this.shipSize); i--) {
+            this.board.tiles[this.shipRow][i].ship = true;
           }
         break;
         case('d'):
-          for (let i = row; i <= (shipSize + row); i++) {
-            this.board.tiles[i][col].ship = true;
+          for (let i = this.shipRow; i <= (this.shipSize + this.shipRow); i++) {
+            this.board.tiles[i][this.shipCol].ship = true;
           }
         break;
         case('u'):
-          for (let i = row; i > (row - shipSize); i--) {
-            this.board.tiles[i][col].ship = true;
+          for (let i = this.shipRow; i > (this.shipRow - this.shipSize); i--) {
+            this.board.tiles[i][this.shipCol].ship = true;
           }
         break;
       }
       // send information to backend
       for (let i = 0; i < this.remainingShips.length; i++) {
-        if (this.remainingShips[i].type.includes(shipName)) {
+        if (this.remainingShips[i].type.includes(this.shipName)) {
           this.remainingShips.splice(i, 1);
           break;
         }
@@ -161,7 +163,7 @@ export class SetShipsComponent {
     return true;
   }
 
-  openDropdown() {
+  openDropdown(): void {
     this.dropdown = true;
   }
 
@@ -175,11 +177,11 @@ export class SetShipsComponent {
     return this.boardService.getBoards()[0];
   }
 
-  setRemainingShips() {
+  setRemainingShips(): void {
     this.remainingShips = this.boardService.ships;
   }
 
-  getGame(id: number) {
+  getGame(id: number): void {
     var httpRequest = this.http.get<Game>(`${this.apiUrl}/games/${id}`)
     httpRequest.subscribe(
         returnedGame => {
@@ -191,5 +193,34 @@ export class SetShipsComponent {
             this.setRemainingShips();
         })
   }
+
+  setCoords(row: number, col: number): void {
+    this.shipRow = row;
+    this.shipCol = col;
+  }
+
+  setActive(activeShip: Ship): void {
+    for(let ship of this.remainingShips) {
+      ship.isClicked = false;
+    }
+
+    activeShip.isClicked = true;
+    this.shipSize = activeShip.size;
+    this.shipName = activeShip.type;
+  }
+
+  fullName(direction: string): string | undefined {
+    switch (direction) {
+      case('l'): 
+        return "Left"
+      case ('r'):
+        return "Right"
+      case ('u'):
+        return "Up"
+      case ('d'): 
+        return "Down"
+    }
+    return undefined;
+   }
 
 }

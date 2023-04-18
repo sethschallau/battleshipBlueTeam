@@ -79,19 +79,23 @@ document.getElementById("myForm").style.display = "none";
         
       </cdk-virtual-scroll-viewport>
       
-      
+      <div class = "chat-input emoticon-select">
       <button class="image-button" (click)="sendMessage('image1.jpg')">
-        <img src="path/to/image1.jpg" alt="image1" />
+        <img src= {{angryImgSrc}} alt="Angry Emoticon" />
       </button>
       
       <button class="image-button" (click)="sendMessage('image2.jpg')">
-        <img src="path/to/image2.jpg" alt="image2" />
+        <img src= {{ggImgSrc}} alt="Good Game Emoticon" />
       </button>
       
       <button class="image-button" (click)="sendMessage('image3.jpg')">
-        <img src="path/to/image3.jpg" alt="image3" />
+        <img src= {{wowImgSrc}} alt="Wow Emoticon" />
       </button>
+    </div>
+
+    <div class="chat-input">
       <input [(ngModel)]="newMessage" placeholder="Type message..." name="input"/>
+    </div>
 
       <button (click)="sendTextMessage()" class="btn">Send</button>
       <button type="button" class="btn cancel" (click)="closeForm()">{{CloseChat?"Close":"Close"}}</button>

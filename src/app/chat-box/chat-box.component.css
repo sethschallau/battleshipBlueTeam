@@ -81,3 +81,21 @@ body{
   .example-item {
     height: 50px;
   }
+
+  .image-button {
+    width: 35%;
+    height: 35%;
+  }
+
+  .chat-input {
+    display: flex;
+    flex-direction: row;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .emoticon-select  {
+    display: flex;
+    padding: 10px;
+    
+  }

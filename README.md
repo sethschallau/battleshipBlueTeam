@@ -5,9 +5,14 @@ Blue Team's Battleship game for CSC 520 final project.
 - [NodeJS](https://nodejs.org/en/download) (refer to npm download first)
 - [MongoDB](https://www.mongodb.com/docs/manual/administration/install-community/)
 - [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-- [Mongoose] 'npm install mongoose'
-- [Angular] 'npm install -g @angular/cli'
-- [Nodemon] 'npm install nodemon'
+- Mongoose: 'npm install mongoose'
+- Angular: 'npm install -g @angular/cli'
+- Nodemon: 'npm install nodemon'
+
+## Required Downloadable Angular Modules
+- ScrollModule: 'npm install --save @angular/cdk'
+- Material for radio button: 'ng add @angular/material'
+
 
 ## Setup
 1. I believe you should be able to simple npm install in the root directory of the project.

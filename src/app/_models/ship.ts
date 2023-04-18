@@ -7,4 +7,5 @@ export class Ship {
     username: string;
     direction: string;
     imgsrc: string;
+    isClicked?: boolean | undefined;
 }

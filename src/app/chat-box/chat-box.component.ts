@@ -15,6 +15,10 @@ export class ChatBoxComponent implements AfterViewInit {
   CloseChat:boolean = true;
   chatIsVisible:boolean = true;
   items = Array.from({length: 100000}).map((_, i) => `Item #${i}`);
+  angryImgSrc = '../assets/emoticons/Angry.png';
+  ggImgSrc = '../assets/emoticons/GG.png';
+  wowImgSrc = '../assets/emoticons/Wow.png';
+
 
   constructor(private http: HttpClient, private elementRef: ElementRef) { }
 
