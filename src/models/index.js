@@ -26,6 +26,7 @@ const GameSchema = new Schema({
   status: { type: String, enum: ['waiting', 'playing', 'completed', 'abandoned'], required: true },
   players: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   currentPlayer: { type: Schema.Types.ObjectId, ref: 'User' },
+  winner: {type: Schema.Types.ObjectId, ref: 'User'},
   ships: [
     {
       playerUserName: { type: String, required: true },
