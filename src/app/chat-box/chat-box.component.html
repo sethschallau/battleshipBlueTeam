@@ -54,7 +54,7 @@ document.getElementById("myForm").style.display = "none";
       <label for="msg"><b>Message</b></label>
       <!-- <textarea placeholder="Type message.." name="msg" required></textarea> -->
       
-      <div class="chat-box">
+      <!-- <div class="chat-box">
         <div class="message-container">
             <ng-container *ngFor="let message of messages">
               <div class="message">
@@ -64,7 +64,21 @@ document.getElementById("myForm").style.display = "none";
               </div>
             </ng-container>
           </div>
-      </div>
+      </div> -->
+
+      <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+        <div *cdkVirtualFor="let message of messages" class="example-item">
+
+          <div class="message">
+            <span class="playerUserName">{{ message.playerUserName }}: </span>
+            <img *ngIf="message.imageFile !== 'NA'" [src]="'path/to/images/' + message.imageFile"/>
+            <p *ngIf="message.imageFile === 'NA'">{{ message.note }}</p>
+          </div>
+
+        </div>
+        
+      </cdk-virtual-scroll-viewport>
+      
       
       <button class="image-button" (click)="sendMessage('image1.jpg')">
         <img src="path/to/image1.jpg" alt="image1" />

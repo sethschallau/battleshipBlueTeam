@@ -70,3 +70,14 @@ body{
 .form-container .btn:hover, .open-button:hover {
   opacity: 1;
 } 
+
+
+.example-viewport {
+    height: 200px;
+    width: 400px;
+    border: 1px solid black;
+  }
+  
+  .example-item {
+    height: 50px;
+  }
