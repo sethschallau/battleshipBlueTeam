@@ -6,4 +6,5 @@ export class Ship {
     size: number;
     username: string;
     direction: string;
+    imgsrc: string;
 }

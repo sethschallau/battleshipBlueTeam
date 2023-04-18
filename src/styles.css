@@ -97,3 +97,9 @@
     .input-group-text {
       justify-content: space-around;
     }
+
+    .ship-type {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }

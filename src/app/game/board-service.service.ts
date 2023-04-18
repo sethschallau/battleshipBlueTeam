@@ -10,11 +10,11 @@ import { Ship } from '../_models/ship';
       playerId: number = 1;
       boardSize: number = 10;
       boards: Board[] = [];
-      carrier: Ship = {location: null, type: 'Carrier', size: 5, direction: '', username: ''};
-      battleship: Ship = {location: null, type: 'Battleship', size: 4, direction: '', username: ''};
-      destroyer: Ship = {location: null, type: 'Destroyer', size: 3, direction: '', username: ''};
-      submarine: Ship = {location: null, type: 'Submarine', size: 3, direction: '', username: ''};
-      patrol: Ship = {location: null, type: 'Patrol', size: 2, direction: '', username: ''};
+      carrier: Ship = {location: null, type: 'Carrier', size: 5, direction: '', username: '', imgsrc: '../assets/ships/carrier.png'};
+      battleship: Ship = {location: null, type: 'Battleship', size: 4, direction: '', username: '', imgsrc: '../assets/ships/battleship.png'};
+      destroyer: Ship = {location: null, type: 'Destroyer', size: 3, direction: '', username: '', imgsrc: '../assets/ships/destroyer.png'};
+      submarine: Ship = {location: null, type: 'Submarine', size: 3, direction: '', username: '', imgsrc: '../assets/ships/submarine.png'};
+      patrol: Ship = {location: null, type: 'Patrol', size: 2, direction: '', username: '', imgsrc: '../assets/ships/patrol.png'};
       ships: Ship[] = [ this.carrier, this.battleship, this.destroyer, this.submarine, this.patrol ];
 
       constructor() { }

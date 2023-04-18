@@ -6,6 +6,8 @@ import { User } from '../_models/user';
 import { Router } from '@angular/router';
 import { BoardService } from '../game/board-service.service';
 import { AccountService } from '../_security/account.service';
+import { Observable, map, throwError } from 'rxjs';
+import { Player } from '../game/player/player.component';
 
 @Component({
   selector: 'app-current-games',
@@ -16,6 +18,7 @@ export class CurrentGamesComponent {
   myGames: Game[];
   noGames: boolean;
   user: User;
+  username: string;
   apiUrl: string = environment.apiUrl
 
   constructor(
@@ -25,7 +28,7 @@ export class CurrentGamesComponent {
     accountService: AccountService) {
     let checkUser = accountService.currentUserValue;
     if (checkUser) {
-      this.user = checkUser;
+      this.username = checkUser.username;
    }
   }
   ngOnInit(): void {
@@ -36,30 +39,55 @@ export class CurrentGamesComponent {
 }
   
   openGame(gameId: number) {
-    var httpRequest = this.http.get<Game>(`${this.apiUrl}/games/gameId`);
-    httpRequest.subscribe(
-      returnedGame => {
-        if (this.boardService.playerSetShips(returnedGame.ships, this.user.username)) {
+    for (let g of this.myGames) {
+      if (g._id == gameId) {
+        if (this.boardService.playerSetShips(g.ships, this.user.username)) {
           this.router.navigateByUrl(`/game/${gameId}`);
         } else {
           this.router.navigateByUrl(`/game/${gameId}/setships`);
         }
-      })
+      }
+    }
   }
 
   getMyGames() {
-    const params = new HttpParams().append("username", this.user.username);
-    var httpRequest = this.http.get<User>(`${environment.apiUrl}/users/user`, {params})
-    httpRequest.subscribe(
+    const params = new HttpParams().append("username", this.username);
+    this.http.get<User>(`${environment.apiUrl}/users/user`, {params})
+    .subscribe(
       returnedUser => {
-        this.user = returnedUser;
-        this.myGames = returnedUser.games;
-        if (this.myGames.length == 0) {
-          this.noGames = true;
-        } else {
-          this.noGames = false;
-        }
+          this.user = returnedUser;
+          let gameIds = returnedUser.games;
+          if (gameIds.length != 0)
+          {
+            this.gameIdsToObjects(returnedUser.games);
+            this.noGames = false;
+            
+          } else {
+            this.noGames = true;
+          }
       })
+  }
+
+  gameIdsToObjects(gameIds: string[]) {
+    let g: Game[] = [];
+    for (let gameId of gameIds) {
+      this.http.get<Game>(`${this.apiUrl}/games/${gameId}`)
+      .subscribe(returnedGame => {
+          let game: Game = returnedGame;
+          console.log(game)
+            g.push(game);
+          });
+    }
+    this.myGames = g;    
+  }
+
+  otherPlayer(players: User[]) {
+    for (let player of players) {
+      if (player.username != this.username) {
+        return player.username;
+      }
+    }
+    return "Waiting for another player to join..."
   }
 
 }

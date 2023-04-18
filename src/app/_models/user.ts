@@ -3,6 +3,6 @@ import { Game } from "./game";
 export class User {
     id: number;
     username: string;
-    games: Game[];
+    games: string[];
     wins: number;
 }

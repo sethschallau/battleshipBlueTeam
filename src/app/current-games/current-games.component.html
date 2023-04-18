@@ -5,7 +5,7 @@
 <section *ngIf="!noGames">
 <ul class="list-group" *ngFor="let game of myGames">
     <li class="list-group-item join-game-option"
-     (click)="openGame(game._id)">{{game.players[0].username}}
+        (click)="openGame(game._id)"> {{otherPlayer(game.players)}}
     </li>
 </ul>
 </section>

@@ -12,20 +12,20 @@
                 [style.background-color] = "col.ship ? 'blue' : 'transparent'"
                 class="battleship-tile" data-toggle="modal" data-target="#shipPicker">
                 <!-- Modal -->
-                <div class="modal fade" id="shipPicker" tabindex="-1" role="dialog" aria-labelledby="shipPickerLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
+                <div class="modal fade" id="shipPicker" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog">
                     <div class="modal-content">
+                      <form #shipForm ="ngForm" (ngSubmit)="placeShip($event)">
                       <div class="modal-header">
                         <h5 class="modal-title" id="shipPickerLabel">Choose your ship!</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                      <form #shipForm ="ngForm" (ngSubmit)="placeShip($event)">
                       <div class="modal-body">
                         <div class="list-group" *ngFor="let ship of remainingShips">
-                          <button class="list-group-item list-group-item-action" id="t{{j}}{{k}}{{ship.size}}">
-                          {{ship.type}}</button>
+                          <li class="ship-type list-group-item list-group-item-action" id="t{{j}}{{k}}{{ship.size}}">
+                          {{ship.type}} ({{ship.size}} tiles)
+                            <img src = "{{ship.imgsrc}}" />
+                          </li>
                         </div>
                         <br>
                         <div class="direction-modal">
@@ -38,12 +38,12 @@
                           </div>
                         </div>
                         </div>
-                        </form>
-                      </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-outline-primary">Save changes</button>
                       </div>
+                    </form>
+                  </div>
                     </div>
                   </div>
               </td>
