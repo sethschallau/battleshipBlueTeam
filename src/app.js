@@ -37,10 +37,10 @@ app.use(cors());
 
 io.on('connection', (socket) => {
   console.log('A user connected');
-  socket.on('getGame', async (gameId) => {
-    const game = await Game.findById(gameId);
-    socket.emit('gameData', game);
-  });
+  // socket.on('getGame', async (gameId) => {
+  //   const game = await Game.findById(gameId);
+  //   socket.emit('gameData', game);
+  // });
 
   socket.on('getChats', async (gameId) => {
     const chats = await Chat.findOne({ gameId: gameId });
