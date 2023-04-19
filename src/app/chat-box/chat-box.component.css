@@ -81,3 +81,8 @@ body{
   .example-item {
     height: 50px;
   }
+
+  .message-container {
+    max-height: 200px; /* Adjust this value to your desired height */
+    overflow-y: auto;
+  }

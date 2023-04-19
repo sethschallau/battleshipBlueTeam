@@ -1,85 +1,32 @@
 <span id="gameId">643c8c139f46065d4f18ebb3</span>
 <span id="yourUserName">peat</span>
 
-
 <script>
   function openForm() {
-document.getElementById("myForm").style.display = "block";
-}
+    document.getElementById("myForm").style.display = "block";
+  }
 
-function closeForm() {
-document.getElementById("myForm").style.display = "none";
-} 
+  function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+  }
 </script>
 
+<button class="open-button" *ngIf="chatIsVisible" (click)="openForm()">Chat</button>
 
-<!-- <div class="chat-box">
+<div class="chat-popup" id="myForm" *ngIf="!chatIsVisible">
+  <form action="" class="form-container">
+    <h1>Chat</h1>
+    <label for="msg"><b>Message</b></label>
     <div class="message-container">
-        <ng-container *ngFor="let message of messages">
-          <div class="message">
-            <span class="playerUserName">{{ message.playerUserName }}: </span>
-            <img *ngIf="message.imageFile !== 'NA'" [src]="'path/to/images/' + message.imageFile"/>
-            <p *ngIf="message.imageFile === 'NA'">{{ message.note }}</p>
-          </div>
-        </ng-container>
-      </div>
-  
-    <button class="image-button" (click)="sendMessage('image1.jpg')">
-      <img src="path/to/image1.jpg" alt="image1" />
-    </button>
-    
-    <button class="image-button" (click)="sendMessage('image2.jpg')">
-      <img src="path/to/image2.jpg" alt="image2" />
-    </button>
-    
-    <button class="image-button" (click)="sendMessage('image3.jpg')">
-      <img src="path/to/image3.jpg" alt="image3" />
-    </button>
-    
-    <div class="text-input-container">
-      <input [(ngModel)]="newMessage" placeholder="Message Here" />
-      <button (click)="sendTextMessage()">Send</button>
-    </div>
-  </div> -->
-
-
-
-
-  <button class="open-button" *ngIf="chatIsVisible" (click)="openForm()">Chat</button>
-
-  <div class="chat-popup" id="myForm" *ngIf="!chatIsVisible">
-    <form action="" class="form-container">
-      <h1>Chat</h1>
-  
-      <label for="msg"><b>Message</b></label>
-      <!-- <textarea placeholder="Type message.." name="msg" required></textarea> -->
-      
-      <!-- <div class="chat-box">
-        <div class="message-container">
-            <ng-container *ngFor="let message of messages">
-              <div class="message">
-                <span class="playerUserName">{{ message.playerUserName }}: </span>
-                <img *ngIf="message.imageFile !== 'NA'" [src]="'path/to/images/' + message.imageFile"/>
-                <p *ngIf="message.imageFile === 'NA'">{{ message.note }}</p>
-              </div>
-            </ng-container>
-          </div>
-      </div> -->
-
-      <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
-        <div *cdkVirtualFor="let message of messages" class="example-item">
-
-          <div class="message">
-            <span class="playerUserName">{{ message.playerUserName }}: </span>
-            <img *ngIf="message.imageFile !== 'NA'" [src]="'path/to/images/' + message.imageFile"/>
-            <p *ngIf="message.imageFile === 'NA'">{{ message.note }}</p>
-          </div>
-
+      <ng-container *ngFor="let message of messages">
+        <div class="message">
+          <span class="playerUserName">{{ message.playerUserName }}: </span>
+          <img *ngIf="message.imageFile !== 'NA'" [src]="'path/to/images/' + message.imageFile" />
+          <p *ngIf="message.imageFile === 'NA'">{{ message.note }}</p>
         </div>
-        
-      </cdk-virtual-scroll-viewport>
-      
-      
+      </ng-container>
+    </div>
+       
       <button class="image-button" (click)="sendMessage('image1.jpg')">
         <img src="path/to/image1.jpg" alt="image1" />
       </button>
