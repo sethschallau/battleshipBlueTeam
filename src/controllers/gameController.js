@@ -132,7 +132,7 @@ exports.createGame = async (req, res) => {
     try {
       const { gameId, username, coordinate } = req.body;
   
-      const game = await Game.findById(gameId);
+      const game = await Game.findById(gameId).populate('players');
       if (!game) {
         res.status(404).json({ message: 'Game not found' });
         return;
@@ -180,7 +180,7 @@ exports.createGame = async (req, res) => {
         await game.save();
         res.status(200).json({ result: 'win' });
       } else {
-        game.currentPlayer = opponent;
+        game.currentPlayer = opponent.playerUserName;
         await game.save();
         res.status(200).json({ result: isHit ? 'hit' : 'miss' });
       }
