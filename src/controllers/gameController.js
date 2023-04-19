@@ -90,7 +90,7 @@ exports.createGame = async (req, res) => {
   exports.setPieces = async (req, res) => {
     try {
       const { gameId, username, ships } = req.body;
-      const game = await Game.findById(gameId);
+      const game = await Game.findById(gameId).populate('players');
   
       if (!game) {
         return res.status(404).json({ message: 'Game not found' });
