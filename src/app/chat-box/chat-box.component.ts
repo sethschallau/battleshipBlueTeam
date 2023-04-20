@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, AfterViewChecked, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { io, Socket } from 'socket.io-client';
 
@@ -15,6 +15,9 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
   chatIsVisible: boolean = true;
   items = Array.from({ length: 100000 }).map((_, i) => `Item #${i}`);
   private socket: any;
+
+  /** The scrollable chat view */
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
   constructor(private http: HttpClient, private elementRef: ElementRef) {
     this.socket = io('http://localhost:3000');
@@ -39,6 +42,10 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.socket.disconnect();
   }
+
+  ngAfterViewChecked() {        
+    this.scrollToBottom();        
+  }   
 
   sendMessage(imageName: string): void {
     this.socket.emit('newMessage', {
@@ -70,4 +77,10 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
   openForm(): void {
     this.chatIsVisible = !this.chatIsVisible;
   }
+
+  scrollToBottom(): void {
+    try {
+        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch(err) { }                 
+}
 }
