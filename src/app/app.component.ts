@@ -19,7 +19,7 @@ export class AppComponent {
       this.accountService.currentUser.subscribe(x => this.currentUser = x);
       this.router.events.subscribe((event) => {
           if (event instanceof NavigationEnd) {
-              if (event.url.includes('/login')) {
+              if (event.url.includes('/login') || event.url.includes('/register')) {
                   this.loginPage = true;
               } else {
                   this.loginPage = false;
