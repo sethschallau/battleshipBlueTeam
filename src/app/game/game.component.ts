@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Game } from '../_models/game';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { AccountService } from '../_security/account.service';
 
 const NUM_PLAYERS: number = 2;
 // TODO: number of tiles containing ships 
@@ -26,13 +27,19 @@ export class GameComponent {
   players: number = 0;
   gameId: string;
   game: Game;
+  username: string;
 
   constructor(
     private toastr: ToastrService,
     private boardService: BoardService,
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private accountService: AccountService
   ) {
+    let checkUser = this.accountService.currentUserValue;
+    if (checkUser) {
+      this.username = checkUser.username;
+   }
     this.createBoards();
   }
 
@@ -69,6 +76,9 @@ ngOnDestroy() {
     }
     this.canPlay = false;
     this.boards[boardId].tiles[row][col].shot = true;
+    if (!this.postMissle(row, col)) {
+      throw Error("Couldn't send missle");
+    }
     return this;
   }
 
@@ -121,6 +131,17 @@ ngOnDestroy() {
             returnedGame => {
                 this.game = returnedGame;
             })
+  }
+
+  postMissle( row: number, col: number ): boolean {
+    const body = { gameId: this.gameId, username: this.username, coordinate: { x: row, y: col }};
+    var httpRequest = this.http.post<any>(`${this.apiUrl}/games/sendMissle`, body);
+    httpRequest.subscribe(
+      _ => {
+        return true;
+      }
+    )
+    return false;
   }
 
   }

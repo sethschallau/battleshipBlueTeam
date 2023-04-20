@@ -22,7 +22,7 @@ import { SetShipsComponent } from './game/set-ships/set-ships.component';
 import { CurrentGamesComponent } from './current-games/current-games.component';
 import { ChatBoxComponent } from './chat-box/chat-box.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
 
 
 @NgModule({

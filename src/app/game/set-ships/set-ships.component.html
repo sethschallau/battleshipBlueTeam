@@ -20,7 +20,7 @@
     <div class="modal" id="shipPickerModal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <form #shipForm ="ngForm" (ngSubmit)="placeShip()">
+          <!-- <form #shipForm ="ngForm" (ngSubmit)="placeShip()" autocomplete="off"> -->
           <div class="modal-header">
             <h5 class="modal-title">Choose your ship!</h5>
             <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
@@ -35,26 +35,27 @@
               </button>
             </div>
             <br>
-            <div class="direction-modal">
+            <!-- <div class="direction-modal"> -->
               Direction of Ship: 
-                  <mat-radio-group class="direction-radio-group" [(ngModel)]="shipDirection">
+                  <mat-radio-group name="direction-radio" class="direction-radio-group" [(ngModel)]="shipDirection">
                     <mat-radio-button class="direction-radio-button" *ngFor="let direction of directions" [value]="direction">
                       {{fullName(direction)}}
                     </mat-radio-button>
                   </mat-radio-group>
               </div>
-            </div>
+            <!-- </div> -->
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-outline-primary" data-dismiss="modal">Save changes</button>
+            <button type="button" class="btn btn-outline-primary" (click)="placeShip()" data-dismiss="modal">Save changes</button>
           </div>
-        </form>
+        <!-- </form> -->
       </div>
         </div>
       </div>
 
       </div>
-      <button> Start Game! </button>
+      <button (click) ="resetShips()" class="btn btn-outline-primary"> Reset </button>
+      <button [disabled]="!allShipsSet()" class="btn btn-outline-primary" (click)="submitShips()"> Start Game! </button>
       <!-- BUTTON DISABLED UNTIL ALL SHIPS SET, SUBMITS FORM AND NAVIGATES TO GAME PAGE. OUTLINED STYLE-->
     </div>
   </div>

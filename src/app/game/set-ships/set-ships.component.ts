@@ -5,7 +5,7 @@ import { BoardService } from 'src/app/game/board-service.service';
 import { Board } from 'src/app/game/board/board.component';
 import { Tile } from '../tile/tile.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { Game } from 'src/app/_models/game';
 import { environment } from 'src/environments/environment';
@@ -40,6 +40,8 @@ export class SetShipsComponent {
   shipDirection: string;
   shipName: string;
   directions: string[] = ['l', 'r', 'u', 'd'];
+  placedShips: Ship[];
+  shipArray: any[];
 
   constructor(
     private toastr: ToastrService,
@@ -69,13 +71,12 @@ export class SetShipsComponent {
 
   placeShip() {
       let tile: Tile = this.board.tiles[this.shipRow][this.shipCol];
-    alert(this.shipName + " " + this.shipDirection + ": " + this.shipRow + ", " + this.shipCol)
       if (!this.checkValidShipPlacement(tile, this.shipSize, this.shipDirection)) {
         return;
       }
       switch (this.shipDirection) {
         case('r'):
-          for (let i = this.shipCol; i <= (this.shipSize + this.shipCol); i++) {
+          for (let i = this.shipCol; i < (this.shipSize + this.shipCol); i++) {
             this.board.tiles[this.shipRow][i].ship = true;
           }
         break;
@@ -85,7 +86,7 @@ export class SetShipsComponent {
           }
         break;
         case('d'):
-          for (let i = this.shipRow; i <= (this.shipSize + this.shipRow); i++) {
+          for (let i = this.shipRow; i < (this.shipSize + this.shipRow); i++) {
             this.board.tiles[i][this.shipCol].ship = true;
           }
         break;
@@ -95,13 +96,21 @@ export class SetShipsComponent {
           }
         break;
       }
-      // send information to backend
+      
+
       for (let i = 0; i < this.remainingShips.length; i++) {
         if (this.remainingShips[i].type.includes(this.shipName)) {
-          this.remainingShips.splice(i, 1);
+          let s: Ship[] = this.remainingShips.splice(i, 1);
+          for (let ship of s) {
+            ship.location = { x: this.shipRow, y: this.shipCol };
+            ship.direction = this.shipDirection;
+            ship.username = this.user.username;
+            this.placedShips.push(ship);
+          }
           break;
         }
       }
+
       
       if (this.remainingShips.length == 0) {
         this.finished = true;
@@ -120,44 +129,52 @@ export class SetShipsComponent {
 
     case('r'):
       for (let i = col; i <= (shipSize + col); i++) {
-        if (tile.col + shipSize > BOARD_SIZE) {
+        if (i >= BOARD_SIZE) {
           this.toastr.error("Too close to the edge!");
+          return false;
         }
-        if (this.board.tiles[row][i].ship = true) {
+        if (this.board.tiles[row][i].ship) {
           this.toastr.error("Can't overlap other ships!")
+          return false;
         }
       }
-      break;
+      return true;
     case('l'):
       for (let i = col; i > (col - shipSize); i--) {
-        if (tile.col - shipSize < 0) {
+        if (i < 0) {
           this.toastr.error("Too close to the edge!");
+          return false;
         }
-        if (this.board.tiles[row][i].ship = true) {
+        if (this.board.tiles[row][i].ship) {
           this.toastr.error("Can't overlap other ships!");
+          return false;
         }
       }
-      break;
+      return true;
     case('d'):
       for (let i = row; i <= (shipSize + row); i++) {
-        if (tile.row + shipSize > BOARD_SIZE) {
+        if (i >= BOARD_SIZE) {
           this.toastr.error("Too close to the edge!");
+          return false;
           }
-        if (this.board.tiles[i][col].ship = true) {
+        if (this.board.tiles[i][col].ship) {
           this.toastr.error("Can't overlap other ships!");
+          return false;
         }      
       }
-      break;
+      return true;
     case('u'):
       for (let i = row; i > (row - shipSize); i--) {
-        if (tile.row - shipSize < 0) {
+        if (i < 0) {
           this.toastr.error("Too close to the edge!");
+          return false;
           }
-        if (this.board.tiles[i][col].ship = true) {
+        if (this.board.tiles[i][col].ship) {
           this.toastr.error("Can't overlap other ships!");
+          return false;
         }
       }
-      break;
+      return true;
     }
 
     return true;
@@ -178,10 +195,15 @@ export class SetShipsComponent {
   }
 
   setRemainingShips(): void {
-    this.remainingShips = this.boardService.ships;
+     this.remainingShips = [];
+     this.placedShips = [];
+     for (let ship of this.boardService.ships) {
+      this.remainingShips.push(ship);
+     }
   }
 
-  getGame(id: number): void {
+  getGame(id: string): void {
+    this.gameId = id;
     var httpRequest = this.http.get<Game>(`${this.apiUrl}/games/${id}`)
     httpRequest.subscribe(
         returnedGame => {
@@ -223,4 +245,59 @@ export class SetShipsComponent {
     return undefined;
    }
 
+   resetShips(): void {
+    for (let i = 0; i < BOARD_SIZE; i++ ) {
+      for (let j = 0; j < BOARD_SIZE; j++ ) {
+        this.board.tiles[i][j].ship = false;
+      }
+    }
+    this.setRemainingShips();
+   }
+
+     // {
+  //   "gameId": "your_game_id",
+  //   "username": "player_username",
+  //   "ships": [
+  //     {
+  //       "coords": [
+  //         { "x": 0, "y": 0 },
+  //         { "x": 1, "y": 0 }
+  //       ],
+  //       "shipType": "Battleship",
+  //       "direction": "r"
+  //     },
+  //     {
+  //       "coords": [
+  //         { "x": 2, "y": 2 },
+  //         { "x": 2, "y": 3 }
+  //       ],
+  //       "shipType": "Destroyer",
+  //       "direction": "u"
+  //     }
+  //   ]
+  // }
+
+   allShipsSet(): boolean {
+    if (this.remainingShips != undefined) {
+      return (this.remainingShips.length == 0);
+    }
+    return false;
+   }
+
+    createShipArray() {
+      this.shipArray = [];
+      for (let ship of this.placedShips) {
+        this.shipArray.push( {coords: ship.location, shipType: ship.type, direction: ship.direction} );
+      }
+    }
+
+   submitShips() {
+    this.createShipArray();
+    const body = { gameId: this.gameId, username: this.user.username, ships: this.shipArray };
+    var httpRequest = this.http.post<any>(`${this.apiUrl}/games/set-pieces`, body);
+    httpRequest.subscribe(
+      returnedGame => {
+        this.router.navigateByUrl(`/game/${this.gameId}`);
+      })
+   }
 }
