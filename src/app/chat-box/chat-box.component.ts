@@ -19,6 +19,9 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
   /** The scrollable chat view */
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
+  /** The input for the form */
+  @ViewChild('messageInput') messageInput: ElementRef;
+
   constructor(private http: HttpClient, private elementRef: ElementRef) {
     this.socket = io('http://localhost:3000');
   }
@@ -81,6 +84,19 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
   scrollToBottom(): void {
     try {
         this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-    } catch(err) { }                 
-}
+    } catch(err) { }      
+  }
+
+  formSubmit(data: { input: any; }): void{
+    console.log(data);
+    // alert("The input entered is: " + data.input);
+    this.socket.emit('newMessage', {
+      playerUserName: this.elementRef.nativeElement.querySelector('#yourUserName').textContent,
+      imageFile: 'NA',
+      note: data.input,
+      gameId: this.gameId
+    });
+    
+    this.messageInput.nativeElement.value = '';
+  }
 }
