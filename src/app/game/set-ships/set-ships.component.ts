@@ -5,12 +5,13 @@ import { BoardService } from 'src/app/game/board-service.service';
 import { Board } from 'src/app/game/board/board.component';
 import { Tile } from '../tile/tile.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { Game } from 'src/app/_models/game';
 import { environment } from 'src/environments/environment';
 import { AccountService } from 'src/app/_security/account.service';
 import { User } from 'src/app/_models/user';
+import { Location } from 'src/app/_models/location';
 
 // TODO: number of tiles containing ships 
 const BOARD_SIZE = 10;
@@ -42,6 +43,7 @@ export class SetShipsComponent {
   directions: string[] = ['l', 'r', 'u', 'd'];
   placedShips: Ship[];
   shipArray: any[];
+  shipCoords: Location[];
 
   constructor(
     private toastr: ToastrService,
@@ -71,6 +73,7 @@ export class SetShipsComponent {
 
   placeShip() {
       let tile: Tile = this.board.tiles[this.shipRow][this.shipCol];
+      this.shipCoords = [];
       if (!this.checkValidShipPlacement(tile, this.shipSize, this.shipDirection)) {
         return;
       }
@@ -78,21 +81,26 @@ export class SetShipsComponent {
         case('r'):
           for (let i = this.shipCol; i < (this.shipSize + this.shipCol); i++) {
             this.board.tiles[this.shipRow][i].ship = true;
+            this.shipCoords.push({ x: this.shipRow, y: i });
+  
           }
         break;
         case('l'):
           for (let i = this.shipCol; i > (this.shipCol - this.shipSize); i--) {
             this.board.tiles[this.shipRow][i].ship = true;
+            this.shipCoords.push({ x: this.shipRow, y: i });
           }
         break;
         case('d'):
           for (let i = this.shipRow; i < (this.shipSize + this.shipRow); i++) {
             this.board.tiles[i][this.shipCol].ship = true;
+            this.shipCoords.push({ x: i, y: this.shipCol });
           }
         break;
         case('u'):
           for (let i = this.shipRow; i > (this.shipRow - this.shipSize); i--) {
             this.board.tiles[i][this.shipCol].ship = true;
+            this.shipCoords.push({ x: i, y: this.shipCol });
           }
         break;
       }
@@ -102,7 +110,7 @@ export class SetShipsComponent {
         if (this.remainingShips[i].type.includes(this.shipName)) {
           let s: Ship[] = this.remainingShips.splice(i, 1);
           for (let ship of s) {
-            ship.location = { x: this.shipRow, y: this.shipCol };
+            ship.location = this.shipCoords;
             ship.direction = this.shipDirection;
             ship.username = this.user.username;
             this.placedShips.push(ship);
@@ -289,6 +297,7 @@ export class SetShipsComponent {
       for (let ship of this.placedShips) {
         this.shipArray.push( {coords: ship.location, shipType: ship.type, direction: ship.direction} );
       }
+
     }
 
    submitShips() {

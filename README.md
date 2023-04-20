@@ -12,6 +12,7 @@ Blue Team's Battleship game for CSC 520 final project.
 ## Required Downloadable Angular Modules
 - ScrollModule: 'npm install --save @angular/cdk'
 - Material for radio button: 'ng add @angular/material'
+- WebSocket: 'npm i socket.io-client'
 
 
 ## Setup
