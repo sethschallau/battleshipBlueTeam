@@ -99,7 +99,8 @@ exports.createGame = async (req, res) => {
       const playerShip = game.ships.find(ship => ship.playerUserName === username);
   
       if (!playerShip) {
-        return res.status(400).json({ message: 'Player ship not found in the game' });
+        playerShip = { playerUserName: username, positions: [] };
+        game.ships.push(playerShip);
       }
   
       playerShip.positions = ships;
