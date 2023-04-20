@@ -96,15 +96,14 @@ exports.createGame = async (req, res) => {
         return res.status(404).json({ message: 'Game not found' });
       }
   
-      const playerIndex = game.players.findIndex(player => player.username === username);
+      const playerShip = game.ships.find(ship => ship.playerUserName === username);
   
-      if (playerIndex === -1) {
-        return res.status(400).json({ message: 'Player not found in the game' });
+      if (!playerShip) {
+        return res.status(400).json({ message: 'Player ship not found in the game' });
       }
   
-      game.ships[playerIndex].positions = ships;
+      playerShip.positions = ships;
   
-      // Check if both players have set their pieces
       let allPlayersSet = true;
       for (const ship of game.ships) {
         if (ship.positions.length === 0) {
@@ -113,7 +112,6 @@ exports.createGame = async (req, res) => {
         }
       }
   
-      // If both players have set their pieces, update the game status to 'playing'
       if (allPlayersSet) {
         game.status = 'playing';
       }
@@ -126,6 +124,7 @@ exports.createGame = async (req, res) => {
       res.status(500).json({ message: 'Error setting pieces', error });
     }
   };
+  
   
   
   exports.sendMissile = async (req, res) => {

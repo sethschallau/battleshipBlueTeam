@@ -56,7 +56,7 @@ body{
   padding: 16px 20px;
   border: none;
   cursor: pointer;
-  width: 100%;
+  width: 50%;
   margin-bottom:10px;
   opacity: 0.8;
 }
@@ -103,4 +103,6 @@ body{
   .message-container {
     max-height: 200px; /* Adjust this value to your desired height */
     overflow-y: auto;
+    border: solid;
+    border-color: #04AA6D;
   }

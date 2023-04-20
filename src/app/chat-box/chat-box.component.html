@@ -14,10 +14,10 @@
 <button class="open-button" *ngIf="chatIsVisible" (click)="openForm()">Chat</button>
 
 <div class="chat-popup" id="myForm" *ngIf="!chatIsVisible">
-  <form action="" class="form-container">
+  <form style="border: inset;" #chatMessage="ngForm" action="" class="form-container" (ngSubmit)="formSubmit(chatMessage.value)">
     <h1>Chat</h1>
     <label for="msg"><b>Message</b></label>
-    <div class="message-container">
+    <div class="message-container" #scrollMe>
       <ng-container *ngFor="let message of messages">
         <div class="message">
           <span class="playerUserName">{{ message.playerUserName }}: </span>
@@ -38,13 +38,9 @@
       <button class="image-button" (click)="sendMessage('image3.jpg')">
         <img src= {{wowImgSrc}} alt="Wow Emoticon" />
       </button>
-    </div>
+      <input style="width: 100%; height: 50px;" #messageInput placeholder="Type message..." name="input" ngModel/>
 
-    <div class="chat-input">
-      <input [(ngModel)]="newMessage" placeholder="Type message..." name="input"/>
-    </div>
-
-      <button (click)="sendTextMessage()" class="btn">Send</button>
-      <button type="button" class="btn cancel" (click)="closeForm()">{{CloseChat?"Close":"Close"}}</button>
+      <!-- <button (click)="sendTextMessage()" class="btn">Send</button> -->
+      <button type="button" class="btn cancel" name="chatMe" (click)="closeForm()">{{CloseChat?"Close":"Close"}}</button>
     </form>
   </div> 

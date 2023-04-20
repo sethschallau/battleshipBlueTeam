@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, AfterViewChecked, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { io, Socket } from 'socket.io-client';
 
@@ -19,6 +19,12 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
   ggImgSrc = '../assets/emoticons/GG.png';
   wowImgSrc = '../assets/emoticons/Wow.png';
 
+
+  /** The scrollable chat view */
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+
+  /** The input for the form */
+  @ViewChild('messageInput') messageInput: ElementRef;
 
   constructor(private http: HttpClient, private elementRef: ElementRef) {
     this.socket = io('http://localhost:3000');
@@ -43,6 +49,10 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.socket.disconnect();
   }
+
+  ngAfterViewChecked() {        
+    this.scrollToBottom();        
+  }   
 
   sendMessage(imageName: string): void {
     this.socket.emit('newMessage', {
@@ -73,5 +83,24 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
 
   openForm(): void {
     this.chatIsVisible = !this.chatIsVisible;
+  }
+
+  scrollToBottom(): void {
+    try {
+        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch(err) { }      
+  }
+
+  formSubmit(data: { input: any; }): void{
+    console.log(data);
+    // alert("The input entered is: " + data.input);
+    this.socket.emit('newMessage', {
+      playerUserName: this.elementRef.nativeElement.querySelector('#yourUserName').textContent,
+      imageFile: 'NA',
+      note: data.input,
+      gameId: this.gameId
+    });
+    
+    this.messageInput.nativeElement.value = '';
   }
 }
