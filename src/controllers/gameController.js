@@ -96,14 +96,10 @@ exports.createGame = async (req, res) => {
         return res.status(404).json({ message: 'Game not found' });
       }
   
-      const playerShip = game.ships.find(ship => ship.playerUserName === username);
-  
-      if (!playerShip) {
-        playerShip = { playerUserName: username, positions: [] };
-        game.ships.push(playerShip);
-      }
-  
-      playerShip.positions = ships;
+      game.ships.push({
+        playerUserName: username,
+        positions: ships
+      });
   
       let allPlayersSet = true;
       for (const ship of game.ships) {
