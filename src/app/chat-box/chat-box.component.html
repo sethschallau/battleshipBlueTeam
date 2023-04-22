@@ -38,8 +38,8 @@
       <button class="image-button" (click)="sendMessage('image3.jpg')">
         <img src= {{wowImgSrc}} alt="Wow Emoticon" />
       </button>
-      <input style="width: 100%; height: 50px;" #messageInput placeholder="Type message..." name="input" ngModel/>
-
       <!-- <button (click)="sendTextMessage()" class="btn">Send</button> -->
       <button type="button" class="btn cancel" name="chatMe" (click)="closeForm()">{{CloseChat?"Close":"Close"}}</button>
   </div> 
+  <input style="width: 100%; height: 50px;" #messageInput placeholder="Type message..." name="input" ngModel/>
+</form>
