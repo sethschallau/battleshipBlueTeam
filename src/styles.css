@@ -69,9 +69,10 @@
     }
 
     .jumbotron {
-      background-color: #563d76c1;
+      background-color: #4CAF50;
       padding-top: 80px;
       padding-bottom: 80px;
+      opacity: 50%;
     }
 
     .jumbotron h1 {
