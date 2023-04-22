@@ -3,5 +3,11 @@
 </div>
 
 <ul class="list-group" *ngFor="let game of activeGames">
-    <li class="list-group-item">{{game.createdBy}}</li>
+    <li class="list-group-item join-game-option"
+     (click)="joinGame(game._id)">{{game.players[0].username}}
+    </li>
 </ul>
+
+<section *ngIf="noGames">
+    <h3>Currently, there are no open games. Try starting a new one!</h3>
+</section>

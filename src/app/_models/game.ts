@@ -1,13 +1,14 @@
 import { User } from "./user";
-import { Ship } from "./ship";
+import { ShipList } from "./shipList";
+import { ShotList } from "./shotList";
 
 export class Game {
-    id: number;
+    _id: string;
     status: string;
     players: User[];
-    currentPlayer: User;
+    currentPlayer: string;
     createdBy: string;
-    ships: Ship[];
-    hits: Location[];
-    misses: Location[];
+    ships: ShipList[];
+    hits: ShotList[];
+    misses: ShotList[];
 }

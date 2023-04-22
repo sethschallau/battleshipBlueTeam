@@ -9,7 +9,6 @@ import { LoginComponent } from './RegisterLogin/login/login.component';
 import { RegisterComponent } from './RegisterLogin/register/register.component';
 import { FormsModule } from '@angular/forms';
 import { GameComponent } from './game/game.component';
-import { Player } from './user/player.component';
 import { ToastrModule } from 'ngx-toastr';
 import { Board } from './game/board/board.component';
 import { HomeComponent } from './home/home.component';
@@ -18,8 +17,12 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NewGameComponent } from './new-game/new-game.component';
 import { JoinGameComponent } from './join-game/join-game.component';
 import { ErrorInterceptor } from './_security/error.interceptor';
+import { SetShipsComponent } from './game/set-ships/set-ships.component';
+import { CurrentGamesComponent } from './current-games/current-games.component';
 import { ChatBoxComponent } from './chat-box/chat-box.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatRadioModule } from '@angular/material/radio';
+
 
 @NgModule({
   declarations: [
@@ -27,12 +30,13 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     LoginComponent,
     RegisterComponent,
     GameComponent,
-    Player,
     Board,
     HomeComponent,
     Tile,
     NewGameComponent,
     JoinGameComponent,
+    SetShipsComponent,
+    CurrentGamesComponent,
     ChatBoxComponent
   ],
   imports: [
@@ -43,6 +47,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     CommonModule,
     BrowserAnimationsModule,
     ScrollingModule,
+    MatRadioModule,
     ToastrModule.forRoot()
   ],
   providers: [ 

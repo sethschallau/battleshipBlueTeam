@@ -1,0 +1,62 @@
+<div class="section">
+    <div class="container">
+      <div class="content">
+        <h1 class="title">Ready to set your ships?</h1>
+        <hr>
+  
+        <!-- loops through the boards array and displays the player and board tiles -->
+        <div class="columns">
+            <table class="is-bordered">
+              <tr *ngFor="let row of board.tiles; let j = index">
+                <td *ngFor="let col of row; let k = index"
+                [style.background-color] = "col.ship ? 'blue' : 'transparent'"
+                class="battleship-tile" data-toggle="modal" data-target="#shipPickerModal" (click)="setCoords(j, k)">
+              </td>
+            </tr>
+          </table>
+        </div>
+
+    <!-- Modal -->
+    <div class="modal" id="shipPickerModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <!-- <form #shipForm ="ngForm" (ngSubmit)="placeShip()" autocomplete="off"> -->
+          <div class="modal-header">
+            <h5 class="modal-title">Choose your ship!</h5>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="list-group" *ngFor="let ship of remainingShips">
+              <button type="button" class="ship-type list-group-item list-group-item-action" [ngClass]="{'active': ship.isClicked}" (click)="setActive(ship)">
+              {{ship.type}} ({{ship.size}} tiles)
+                <img src = "{{ship.imgsrc}}" />
+              </button>
+            </div>
+            <br>
+            <!-- <div class="direction-modal"> -->
+              Direction of Ship: 
+                  <mat-radio-group name="direction-radio" class="direction-radio-group" [(ngModel)]="shipDirection">
+                    <mat-radio-button class="direction-radio-button" *ngFor="let direction of directions" [value]="direction">
+                      {{fullName(direction)}}
+                    </mat-radio-button>
+                  </mat-radio-group>
+              </div>
+            <!-- </div> -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-outline-primary" (click)="placeShip()" data-dismiss="modal">Save changes</button>
+          </div>
+        <!-- </form> -->
+      </div>
+        </div>
+      </div>
+
+      </div>
+      <button (click) ="resetShips()" class="btn btn-outline-primary"> Reset </button>
+      <button [disabled]="!allShipsSet()" class="btn btn-outline-primary" (click)="submitShips()"> Start Game! </button>
+      <!-- BUTTON DISABLED UNTIL ALL SHIPS SET, SUBMITS FORM AND NAVIGATES TO GAME PAGE. OUTLINED STYLE-->
+    </div>
+  </div>
+    

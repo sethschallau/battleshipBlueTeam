@@ -15,6 +15,10 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
   chatIsVisible: boolean = true;
   items = Array.from({ length: 100000 }).map((_, i) => `Item #${i}`);
   private socket: any;
+  angryImgSrc = '../assets/emoticons/Angry.png';
+  ggImgSrc = '../assets/emoticons/GG.png';
+  wowImgSrc = '../assets/emoticons/Wow.png';
+
 
   /** The scrollable chat view */
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;

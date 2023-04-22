@@ -41,7 +41,7 @@ exports.createGame = async (req, res) => {
     const newGame = new Game({
       status: 'waiting',
       players: [user._id],
-      currentPlayer: user._id,
+      currentPlayer: user.username,
     });
 
     const savedGame = await newGame.save();
@@ -127,7 +127,6 @@ exports.createGame = async (req, res) => {
   exports.sendMissile = async (req, res) => {
     try {
       const { gameId, username, coordinate } = req.body;
-  
       const game = await Game.findById(gameId).populate('players');
       if (!game) {
         res.status(404).json({ message: 'Game not found' });
@@ -169,11 +168,13 @@ exports.createGame = async (req, res) => {
       const totalHits = game.hits[playerIndex]?.coordinates.length || 0;
 
       if (totalHits >= 17) {
-        game.state = 'completed';
+        game.status = 'completed';
         const winnerUser = await User.findOne({ username });
         game.winner = winnerUser;
         game.currentPlayer = opponent.playerUserName;
         await game.save();
+        winnerUser.wins++;
+        await winnerUser.save()
         res.status(200).json({ result: 'win' });
       } else {
         game.currentPlayer = opponent.playerUserName;

@@ -1,8 +1,11 @@
-import { Game } from "./game";
+import { Ship } from "./ship";
 
 export class User {
-    id: number;
+    _id: string;
     username: string;
-    games: Game[];
+    games: string[];
     wins: number;
+    remainingShips: Ship[];
+    hits: number = 0;
+    misses: number = 0;
 }

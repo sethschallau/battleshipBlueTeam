@@ -82,6 +82,24 @@ body{
     height: 50px;
   }
 
+  .image-button {
+    width: 35%;
+    height: 35%;
+  }
+
+  .chat-input {
+    display: flex;
+    flex-direction: row;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .emoticon-select  {
+    display: flex;
+    padding: 10px;
+    
+  }
+
   .message-container {
     max-height: 200px; /* Adjust this value to your desired height */
     overflow-y: auto;
