@@ -6,8 +6,6 @@ import { User } from '../_models/user';
 import { Router } from '@angular/router';
 import { BoardService } from '../game/board-service.service';
 import { AccountService } from '../_security/account.service';
-import { Observable, map, throwError } from 'rxjs';
-import { Player } from '../game/player/player.component';
 
 @Component({
   selector: 'app-current-games',
@@ -38,9 +36,9 @@ export class CurrentGamesComponent {
   ngOnDestroy() {
 }
   
-  openGame(gameId: number) {
+  openGame(gameId: string) {
     for (let g of this.myGames) {
-      if (g._id == gameId) {
+      if (g._id.includes(gameId)) {
         if (this.boardService.playerSetShips(g.ships, this.user.username)) {
           this.router.navigateByUrl(`/game/${gameId}`);
         } else {
@@ -74,7 +72,6 @@ export class CurrentGamesComponent {
       this.http.get<Game>(`${this.apiUrl}/games/${gameId}`)
       .subscribe(returnedGame => {
           let game: Game = returnedGame;
-          console.log(game)
             g.push(game);
           });
     }

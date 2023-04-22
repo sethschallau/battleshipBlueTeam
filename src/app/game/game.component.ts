@@ -9,10 +9,10 @@ import { Game } from '../_models/game';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AccountService } from '../_security/account.service';
+import { User } from '../_models/user';
 
 const NUM_PLAYERS: number = 2;
 // TODO: number of tiles containing ships 
-const WIN: number = 10;
 
 @Component({
   selector: 'app-game',
@@ -27,7 +27,10 @@ export class GameComponent {
   players: number = 0;
   gameId: string;
   game: Game;
+  user: User;
   username: string;
+  result: string;
+  winningUser: string;
 
   constructor(
     private toastr: ToastrService,
@@ -38,9 +41,9 @@ export class GameComponent {
   ) {
     let checkUser = this.accountService.currentUserValue;
     if (checkUser) {
-      this.username = checkUser.username;
+      this.user = checkUser;
+      this.username = this.user.username;
    }
-    this.createBoards();
   }
 
   ngOnInit(): void {
@@ -64,6 +67,7 @@ ngOnDestroy() {
     if (!this.checkValidHit(boardId, tile)) {
       return;
     }
+    this.postMissle(row, col)
 
     if (tile.ship) {
       this.toastr.success("You sank a ship!");
@@ -76,10 +80,8 @@ ngOnDestroy() {
     }
     this.canPlay = false;
     this.boards[boardId].tiles[row][col].shot = true;
-    if (!this.postMissle(row, col)) {
-      throw Error("Couldn't send missle");
-    }
-    return this;
+
+     return this;
   }
 
   checkValidHit(boardId: number, tile: Tile) : boolean {
@@ -103,16 +105,18 @@ ngOnDestroy() {
   }
 
   createBoards() : GameComponent {
-    for (let i = 0; i < NUM_PLAYERS; i++)
-      this.boardService.createBoard(this.game.players[i].username);
+    this.boardService.createBoard(this.user, this.game);
+    for (let p of this.game.players) {
+      if (!p.username.includes(this.username)) {
+        this.boardService.createBoard(p, this.game);
+      }
+    }
+    
     return this;
   }
 
-  // winner property to determine if a user has won the game.
-  // once a user gets a score higher than the size of the game
-  // board, he has won.
   get winner () : Board | undefined{
-    return this.boards.find(board => board.player.hits >= WIN);
+    return this.boards.find(board => board.player.username.includes(this.winningUser));
   }
 
   // get all boards and assign to boards property
@@ -130,18 +134,33 @@ ngOnDestroy() {
         httpRequest.subscribe(
             returnedGame => {
                 this.game = returnedGame;
+                this.gameId = this.game._id;
+                this.players = this.game.players.length;
+                this.updateCurrentPlayer();
+                this.createBoards();
             })
   }
 
-  postMissle( row: number, col: number ): boolean {
+  postMissle( row: number, col: number ) {
     const body = { gameId: this.gameId, username: this.username, coordinate: { x: row, y: col }};
-    var httpRequest = this.http.post<any>(`${this.apiUrl}/games/sendMissle`, body);
+    var httpRequest = this.http.post<any>(`${this.apiUrl}/games/sendMissile`, body);
     httpRequest.subscribe(
-      _ => {
-        return true;
+      returned => {
+        this.result = returned.result;
+        if (this.result.includes("win")) {
+          this.winningUser = this.username;
+        }
+
       }
     )
-    return false;
   }
 
+  updateCurrentPlayer(): void {
+    if (this.game.currentPlayer.includes(this.username)) {
+      this.canPlay = true;
+    } else {
+      this.canPlay = false;
+    }
   }
+
+}

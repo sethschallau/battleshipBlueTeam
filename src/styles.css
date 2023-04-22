@@ -19,6 +19,10 @@
       background-color: #ff3860;
       color: #fff;
     }
+    .ship {
+      background-color: blue;
+      color: #fff;
+    }
     .content table td, .content table th {
         border: 1px solid #dbdbdb;
         padding: 0.5em 0.75em;

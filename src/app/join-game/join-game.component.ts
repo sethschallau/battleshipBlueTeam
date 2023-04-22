@@ -31,7 +31,7 @@ export class JoinGameComponent {
   ngOnDestroy() {
 }
   
-  joinGame(gameId: number) {
+  joinGame(gameId: string) {
     var httpRequest = this.http.post<Game>(`${this.apiUrl}/games/join`, { gameId: gameId, username: this.user.username })
     httpRequest.subscribe(
       returnedGame => {

@@ -1,7 +1,7 @@
 import { Location } from "./location";
 
 export class Ship {
-    location: Location[] | null;
+    coords: Location[] | null;
     type: string;
     size: number;
     username: string;

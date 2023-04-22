@@ -57,7 +57,6 @@ export class SetShipsComponent {
     if (checkUser) {
       this.user = checkUser;
    }
-    this.createBoard();
   }
 
   ngOnInit(): void {
@@ -110,9 +109,8 @@ export class SetShipsComponent {
         if (this.remainingShips[i].type.includes(this.shipName)) {
           let s: Ship[] = this.remainingShips.splice(i, 1);
           for (let ship of s) {
-            ship.location = this.shipCoords;
+            ship.coords = this.shipCoords;
             ship.direction = this.shipDirection;
-            ship.username = this.user.username;
             this.placedShips.push(ship);
           }
           break;
@@ -193,7 +191,7 @@ export class SetShipsComponent {
   }
 
   createBoard() : SetShipsComponent {
-      this.boardService.createBoard(this.user.username);
+      this.boardService.createBoard(this.user, this.game);
     return this;
   }
 
@@ -206,21 +204,25 @@ export class SetShipsComponent {
      this.remainingShips = [];
      this.placedShips = [];
      for (let ship of this.boardService.ships) {
-      this.remainingShips.push(ship);
+      let updatedShip = ship;
+      updatedShip.username = this.user.username;
+      this.remainingShips.push(updatedShip);
      }
+
   }
 
   getGame(id: string): void {
     this.gameId = id;
     var httpRequest = this.http.get<Game>(`${this.apiUrl}/games/${id}`)
     httpRequest.subscribe(
-        returnedGame => {
+        returnedGame => { 
           if (this.boardService.playerSetShips(returnedGame.ships, this.user.username)) {
             // user has already set their ships)
             this.router.navigateByUrl(`/game/${id}`);
           }
             this.game = returnedGame;
             this.setRemainingShips();
+            this.createBoard();
         })
   }
 
@@ -295,7 +297,7 @@ export class SetShipsComponent {
     createShipArray() {
       this.shipArray = [];
       for (let ship of this.placedShips) {
-        this.shipArray.push( {coords: ship.location, shipType: ship.type, direction: ship.direction} );
+        this.shipArray.push( {coords: ship.coords, shipType: ship.type, direction: ship.direction} );
       }
 
     }
