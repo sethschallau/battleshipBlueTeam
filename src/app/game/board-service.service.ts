@@ -34,8 +34,9 @@ import { Location } from '../_models/location';
             if (!shotList.playerUserName.includes(user.username)) {
               for (let coord of shotList.coordinates) {
                 hits.push(coord);
-                shotCount++;
               }
+            } else {
+              shotCount = shotList.coordinates.length;
             }
           }
         }
@@ -46,8 +47,10 @@ import { Location } from '../_models/location';
             if (!shotList.playerUserName.includes(user.username)) {
               for (let coord of shotList.coordinates) {
                 misses.push(coord);
-                shotCount++;
             }
+          
+          } else {
+            shotCount = shotList.coordinates.length;
           }
           }
         }
