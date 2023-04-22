@@ -11,9 +11,18 @@
       <h1>By: Kaylie, Katie, Seth, and Grey</h1>
       
       <div class="w3-padding-32">
-        <button class="button">New Game</button>
         <button class="button">My Games</button>
 
+        <a class="button">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              New Game
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" routerLink="/new-game">Start New Game</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" routerLink="/join-game">Join New Game</a>
+            </div>
+          </a>
       </div>
       <!-- <div class="w3-bar w3-border">
         <a href="#" class="w3-bar-item button w3-light-grey">My Games</a>
@@ -21,6 +30,21 @@
         <a href="#" class="w3-bar-item button w3-light-grey">Contact</a>
         <a href="#" class="w3-bar-item w3-button w3-hide-small">Weddings</a>
       </div> -->
+
+
     </header>
+
+
+    <!-- <a class="button" (click)="toggleMenu()">
+        <a><button name="menu"></button></a>
+    </a>
+
+
+        <menu class="items-wrapper" *ngIf="isOpen">
+          <a href="#" ><button name="home"></button></a>
+          <a href="#" ><button name="person"></button></a>
+          <a href="#" ><button name="heart"></button></a>
+          <a href="#" ><button name="help"></button></a>
+        </menu> -->
 
   <!-- <app-chat-box></app-chat-box> -->

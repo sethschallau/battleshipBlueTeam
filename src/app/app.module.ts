@@ -50,7 +50,7 @@ import {MatButtonModule} from '@angular/material/button';
     BrowserAnimationsModule,
     ScrollingModule,
     MatRadioModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
   ],
   providers: [ 
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }

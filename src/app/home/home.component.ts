@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
+import {  ElementRef, ViewChild } from '@angular/core';
+
 
 @Component({
   selector: 'app-home',
@@ -7,5 +8,11 @@ import {MatButtonModule} from '@angular/material/button';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
+
+  isOpen = false; // set it to false initially
+
+toggleMenu(){
+ this.isOpen = !this.isOpen; // toggle it as you want
+}
 
 }
