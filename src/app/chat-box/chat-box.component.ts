@@ -72,6 +72,7 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
   }
 
   sendTextMessage(): void {
+    console.log(this.newMessage)
     this.socket.emit('newMessage', {
       playerUserName: this.username,
       imageFile: 'NA',
@@ -98,15 +99,19 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
   }
 
   formSubmit(data: { input: any; }): void{
-    console.log(data);
-    // alert("The input entered is: " + data.input);
-    this.socket.emit('newMessage', {
-      playerUserName: this.username,
-      imageFile: 'NA',
-      note: data.input == '' ? " ": data.input,
-      gameId: this.gameId
-    });
-    
-    this.messageInput.nativeElement.value = '';
+
+    if (data.input != ''){
+      // console.log(data);
+      // alert("The input entered is: " + data.input);
+      this.socket.emit('newMessage', {
+        playerUserName: this.username,
+        imageFile: 'NA',
+        note: data.input == '' ? " ": data.input,
+        gameId: this.gameId
+      });
+      
+      this.messageInput.nativeElement.value = '';
+    }
+
   }
 }
