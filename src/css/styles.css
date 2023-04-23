@@ -50,7 +50,7 @@
     }
 
     .nav-item:hover {
-      background-color: #563d76c1;
+      background-color: #7ccf838a;
     }
 
     a, a:link, a:hover, a:visited, a:active {
@@ -65,14 +65,13 @@
     }
 
     .dropdown-menu a {
-      color: #563D76;
+      color: #88d18e;
     }
 
     .jumbotron {
-      background-color: #4CAF50;
+      background-color: #88d18e;
       padding-top: 80px;
       padding-bottom: 80px;
-      opacity: 50%;
     }
 
     .jumbotron h1 {
@@ -81,18 +80,18 @@
     
     .btn-outline-primary, .btn-outline-primary.disabled, 
     .btn-outline-primary:disabled {
-      border-color: #563D76;
-      color: #563D76
+      border-color: #97ce9c;
+      color: #97ce9c
     }
 
     a.btn-outline-primary {
-      color:#563D76;
+      color:#88d18e;
     }
 
     .btn-outline-primary:not(:disabled):not(.disabled):hover {
-      background-color:#563D76;
+      background-color:#97ce9c;
       color: white;
-      border-color:#563D76;
+      border-color:#97ce9c;
     }
 
     .join-game-option:hover {
@@ -108,13 +107,3 @@
       flex-direction: row;
       flex-wrap: wrap;
     }
-
-    .button-options {
-
-      
-    }
-/* html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
