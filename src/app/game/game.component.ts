@@ -162,6 +162,9 @@ ngOnDestroy() {
                 this.game = returnedGame;
                 this.gameId = this.game._id;
                 this.players = this.game.players.length;
+                if (returnedGame.status.includes("completed")) {
+                  this.winningUser = returnedGame.winner.username;
+                }
                 this.updateCurrentPlayer();
                 this.createBoards();
             })

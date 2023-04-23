@@ -58,7 +58,11 @@ export class CurrentGamesComponent {
           if (gameIds.length != 0)
           {
             this.gameIdsToObjects(returnedUser.games);
-            this.noGames = false;
+            if (this.myGames.length == 0) {
+              this.noGames = true;
+            } else {
+              this.noGames = false;
+            }
             
           } else {
             this.noGames = true;
@@ -72,10 +76,12 @@ export class CurrentGamesComponent {
       this.http.get<Game>(`${this.apiUrl}/games/${gameId}`)
       .subscribe(returnedGame => {
           let game: Game = returnedGame;
+          if (!game.status.includes("completed")) {
             g.push(game);
+          }
           });
     }
-    this.myGames = g;    
+    this.myGames = g;
   }
 
   otherPlayer(players: User[]) {
