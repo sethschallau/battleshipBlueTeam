@@ -103,8 +103,13 @@ body{
   }
 
   .message-container {
-    max-height: 200px; /* Adjust this value to your desired height */
+    max-height: 600px; /* Adjust this value to your desired height */
     overflow-y: auto;
     border: solid;
     border-color: #04AA6D;
   }
+
+.message-content {
+  max-height: 200px;
+  object-fit: contain;
+}
