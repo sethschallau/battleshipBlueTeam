@@ -60,26 +60,16 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
     this.scrollToBottom();        
   }   
 
-  sendMessage(imageName: string): void {
+  sendMessage(imageName: string, textMessage: string): void {
     this.socket.emit('newMessage', {
       playerUserName: this.username,
       imageFile: imageName,
-      note: 'NA',
+      note: textMessage,
       gameId: this.gameId
     });
 
     this.newMessage = '';
-  }
-
-  sendTextMessage(): void {
-    this.socket.emit('newMessage', {
-      playerUserName: this.username,
-      imageFile: 'NA',
-      note: this.newMessage,
-      gameId: this.gameId
-    });
-
-    this.newMessage = '';
+    this.messageInput.nativeElement.value = '';
   }
 
   closeForm(): void {
@@ -97,16 +87,4 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
     } catch(err) { }      
   }
 
-  formSubmit(data: { input: any; }): void{
-    console.log(data);
-    // alert("The input entered is: " + data.input);
-    this.socket.emit('newMessage', {
-      playerUserName: this.username,
-      imageFile: 'NA',
-      note: data.input,
-      gameId: this.gameId
-    });
-    
-    this.messageInput.nativeElement.value = '';
-  }
 }

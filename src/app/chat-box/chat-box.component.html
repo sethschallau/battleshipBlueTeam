@@ -11,7 +11,7 @@
 <button class="open-button" *ngIf="chatIsVisible" (click)="openForm()">Chat</button>
 
 <div class="chat-popup" id="myForm" *ngIf="!chatIsVisible">
-  <form style="border: inset;" #chatMessage="ngForm" action="" class="form-container" (ngSubmit)="formSubmit(chatMessage.value)">
+  <form style="border: inset;" #chatMessage="ngForm" action="" class="form-container" (ngSubmit)="sendMessage('NA', chatMessage.value.input)">
     <h1>Chat</h1>
     <label for="msg"><b>Message</b></label>
     <div class="message-container" #scrollMe>
@@ -23,20 +23,21 @@
         </div>
       </ng-container>
     </div>
-       <div class = "chat-input emoticon-select">
-      <button class="image-button" (click)="sendMessage('Angry.png')">
+    <div class="chat-input emoticon-select">
+      <button class="image-button" (click)="sendMessage('Angry.png', 'NA')">
         <img src= {{angryImgSrc}} alt="Angry Emoticon" />
       </button>
       
-      <button class="image-button" (click)="sendMessage('GG.png')">
+      <button class="image-button" (click)="sendMessage('GG.png', 'NA')">
         <img src= {{ggImgSrc}} alt="Good Game Emoticon" />
       </button>
       
-      <button class="image-button" (click)="sendMessage('Wow.png')">
+      <button class="image-button" (click)="sendMessage('Wow.png', 'NA')">
         <img src= {{wowImgSrc}} alt="Wow Emoticon" />
       </button>
       <input style="width: 100%; height: 50px;" #messageInput placeholder="Type message..." name="input" ngModel/>
 
-      <!-- <button (click)="sendTextMessage()" class="btn">Send</button> -->
       <button type="button" class="btn cancel" name="chatMe" (click)="closeForm()">{{CloseChat?"Close":"Close"}}</button>
-  </div> 
+    </div>
+  </form>
+</div>
