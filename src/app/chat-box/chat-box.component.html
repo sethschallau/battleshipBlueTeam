@@ -18,7 +18,7 @@
       <ng-container *ngFor="let message of messages">
         <div class="message">
           <span class="playerUserName">{{ message.playerUserName }}: </span>
-          <img *ngIf="message.imageFile !== 'NA'" [src]="imageBase + message.imageFile" />
+          <img *ngIf="message.imageFile !== 'NA'" [src]="imageBase + message.imageFile" class="message-content"/>
           <p *ngIf="message.imageFile === 'NA'">{{ message.note }}</p>
         </div>
       </ng-container>
