@@ -191,7 +191,7 @@ export class SetShipsComponent {
   }
 
   createBoard() : SetShipsComponent {
-      this.boardService.createBoard(this.user, this.game);
+      this.boardService.createBoard(this.user, this.game, this.user.username);
     return this;
   }
 

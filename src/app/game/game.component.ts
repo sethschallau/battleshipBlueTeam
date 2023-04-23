@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AccountService } from '../_security/account.service';
 import { User } from '../_models/user';
+import { io } from 'socket.io-client';
 
 const NUM_PLAYERS: number = 2;
 // TODO: number of tiles containing ships 
@@ -31,7 +32,7 @@ export class GameComponent {
   username: string;
   result: string;
   winningUser: string;
-
+  socket: any;
   constructor(
     private toastr: ToastrService,
     private boardService: BoardService,
@@ -44,15 +45,40 @@ export class GameComponent {
       this.user = checkUser;
       this.username = this.user.username;
    }
+   this.socket = io(environment.apiUrl);
+
   }
 
-  ngOnInit(): void {
-    this.idParamSubscription = this.route.params.subscribe(
-        params => {
-          this.getGame(params['id'])
-        }
-    )
+ngOnInit(): void {
+  this.idParamSubscription = this.route.params.subscribe(
+    params => {
+      this.getGame(params['id'])
+    }
+  );
+
+  // Add the following block inside ngOnInit()
+  this.socket.on('gameData', (gameData: Game) => {
+    if (gameData) {
+      this.game = gameData;
+      this.gameId = this.game._id;
+      this.players = this.game.players.length;
+      this.updateCurrentPlayer();
+      this.createBoards();
+    }
+  });
+  this.socket.on('gameData', (gameData: Game) => {
+    if (gameData) {
+      this.game = gameData;
+      this.gameId = this.game._id;
+      this.players = this.game.players.length;
+      this.updateCurrentPlayer();
+      for (const player of this.game.players) {
+        this.boardService.createBoard(player, this.game, this.username);
+      }
+    }
+  });
 }
+
 
 ngOnDestroy() {
     this.idParamSubscription.unsubscribe();
@@ -104,14 +130,14 @@ ngOnDestroy() {
     return true;
   }
 
-  createBoards() : GameComponent {
-    this.boardService.createBoard(this.user, this.game);
+  createBoards(): GameComponent {
+    this.boardService.createBoard(this.user, this.game, this.username);
     for (let p of this.game.players) {
       if (!p.username.includes(this.username)) {
-        this.boardService.createBoard(p, this.game);
+        this.boardService.createBoard(p, this.game, this.username);
       }
     }
-    
+  
     return this;
   }
 
@@ -141,7 +167,7 @@ ngOnDestroy() {
             })
   }
 
-  postMissle( row: number, col: number ) {
+  postMissle(row: number, col: number) {
     const body = { gameId: this.gameId, username: this.username, coordinate: { x: row, y: col }};
     var httpRequest = this.http.post<any>(`${this.apiUrl}/games/sendMissile`, body);
     httpRequest.subscribe(
@@ -150,9 +176,14 @@ ngOnDestroy() {
         if (this.result.includes("win")) {
           this.winningUser = this.username;
         }
-
+      },
+      error => {
+        // handle error
+      },
+      () => {
+        this.socket.emit('missileSent', this.gameId);
       }
-    )
+    );
   }
 
   updateCurrentPlayer(): void {

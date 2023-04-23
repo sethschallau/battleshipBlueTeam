@@ -5,6 +5,7 @@ const gameRoutes = require('./routes/gameRoutes');
 const userRoutes = require('./routes/userRoutes');
 const chatRoutes = require('./routes/chatRoutes');
 const cors = require('cors');
+const { sendMissile } = require('./controllers/gameController.js');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
@@ -37,10 +38,34 @@ app.use(cors());
 
 io.on('connection', (socket) => {
   console.log('A user connected');
-  // socket.on('getGame', async (gameId) => {
-  //   const game = await Game.findById(gameId);
-  //   socket.emit('gameData', game);
-  // });
+  socket.on('getGame', async (gameId) => {
+    try {
+      const game = await Game.findById(gameId)
+        .populate('players')
+        .populate('currentPlayer')
+        .populate('winner');
+      socket.emit('gameData', game);
+    } catch (error) {
+      console.error('Error fetching game data', error);
+    }
+  });
+  
+  socket.on('missileSent', async (gameId) => {
+    try {
+      const game = await Game.findById(gameId)
+        .populate('players')
+        .populate('currentPlayer')
+        .populate('winner');
+      io.emit('gameData', game);
+    } catch (error) {
+      console.error('Error fetching game data', error);
+    }
+  });
+
+  socket.on('sendMissile', async(data) => {
+    const missileResult = await sendMissile(data);
+    socket.emit('missileResult', missileResult);
+  });
 
   socket.on('getChats', async (gameId) => {
     const chats = await Chat.findOne({ gameId: gameId });
@@ -53,20 +78,14 @@ io.on('connection', (socket) => {
   
 
   socket.on('newMessage', async (messageData) => {
-    // Find the chat associated with the game
-    const chat = await Chat.findOne({ gameId: messageData.gameId });
-  
+    const chat = await Chat.findOne({ gameId: messageData.gameId });  
     if (chat) {
-      // Add the message to the existing chat
       chat.chats.push(messageData);
       await chat.save();
     } else {
-      // If there is no chat associated with the game, create a new one
       const newChat = new Chat({ gameId: messageData.gameId, chats: [messageData] });
       await newChat.save();
     }
-  
-    // Emit the new message to all connected clients
     io.emit('message', messageData);
   });
   

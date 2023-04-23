@@ -22,7 +22,14 @@ import { Location } from '../_models/location';
 
       constructor() { }
 
-      createBoard(user: User, game: Game) : BoardService {
+      createBoard(user: User, game: Game, currentUsername: string) : BoardService {
+          // Check if the board for the user already exists
+        let existingBoardIndex = this.boards.findIndex(board => board.player.username === user.username);
+
+        // If the board already exists, remove it from the array
+        if (existingBoardIndex !== -1) {
+          this.boards.splice(existingBoardIndex, 1);
+        }
         // create tiles for board
         let tiles: any[] = [];
         let ships: Location[] | null = [];
@@ -109,14 +116,23 @@ import { Location } from '../_models/location';
           tiles: tiles
         });
         this.playerId++;
-        // append created board to `boards` property
-        this.boards.push(board);
+        if (user.username === currentUsername) {
+          this.boards.unshift(board);
+        } else {
+          // Otherwise, insert it at the second position
+          this.boards.splice(1, 0, board);
+        }
         return this;
       }
       
       // returns all created boards
       getBoards() : Board[] {
         return this.boards;
+      }
+
+      deleteBoards(): BoardService {
+        this.boards = [];
+        return this;
       }
 
     playerSetShips(ships: ShipList[], username: string): boolean {
