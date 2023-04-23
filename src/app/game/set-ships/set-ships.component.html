@@ -38,7 +38,7 @@
             <!-- <div class="direction-modal"> -->
               Direction of Ship: 
                   <mat-radio-group name="direction-radio" class="direction-radio-group" [(ngModel)]="shipDirection">
-                    <mat-radio-button class="direction-radio-button" *ngFor="let direction of directions" [value]="direction">
+                    <mat-radio-button style="color:white; background-color: #4CAF50;" class="direction-radio-button" *ngFor="let direction of directions" [value]="direction">
                       {{fullName(direction)}}
                     </mat-radio-button>
                   </mat-radio-group>
