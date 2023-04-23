@@ -64,7 +64,7 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
     this.socket.emit('newMessage', {
       playerUserName: this.username,
       imageFile: imageName,
-      note: 'NA',
+      "note": 'NA',
       gameId: this.gameId
     });
 
@@ -103,7 +103,7 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
     this.socket.emit('newMessage', {
       playerUserName: this.username,
       imageFile: 'NA',
-      note: data.input,
+      note: data.input == '' ? " ": data.input,
       gameId: this.gameId
     });
     
