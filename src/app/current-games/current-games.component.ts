@@ -14,7 +14,6 @@ import { AccountService } from '../_security/account.service';
 })
 export class CurrentGamesComponent {
   myGames: Game[];
-  noGames: boolean;
   user: User;
   username: string;
   apiUrl: string = environment.apiUrl
@@ -49,6 +48,7 @@ export class CurrentGamesComponent {
   }
 
   getMyGames() {
+    this.myGames = [];
     const params = new HttpParams().append("username", this.username);
     this.http.get<User>(`${environment.apiUrl}/users/user`, {params})
     .subscribe(
@@ -57,31 +57,23 @@ export class CurrentGamesComponent {
           let gameIds = returnedUser.games;
           if (gameIds.length != 0)
           {
-            this.gameIdsToObjects(returnedUser.games);
-            if (this.myGames.length == 0) {
-              this.noGames = true;
-            } else {
-              this.noGames = false;
-            }
-            
-          } else {
-            this.noGames = true;
+            for (let gameId of gameIds) {
+              this.gameIdToObject(gameId)
+              .subscribe({
+                next: (returnedGame) => {
+                  if (!returnedGame.status.includes("completed")) {
+                    this.myGames.push(returnedGame);
+                  }
+                },
+                error: (err) => {throw Error(err);}
+            });
           }
+        }
       })
   }
 
-  gameIdsToObjects(gameIds: string[]) {
-    let g: Game[] = [];
-    for (let gameId of gameIds) {
-      this.http.get<Game>(`${this.apiUrl}/games/${gameId}`)
-      .subscribe(returnedGame => {
-          let game: Game = returnedGame;
-          if (!game.status.includes("completed")) {
-            g.push(game);
-          }
-          });
-    }
-    this.myGames = g;
+  gameIdToObject(gameId: string) {
+      return this.http.get<Game>(`${this.apiUrl}/games/${gameId}`);
   }
 
   otherPlayer(players: User[]) {
