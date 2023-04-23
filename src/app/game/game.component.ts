@@ -96,7 +96,7 @@ ngOnDestroy() {
     this.postMissle(row, col)
 
     if (tile.ship) {
-      this.toastr.success("You sank a ship!");
+      this.toastr.success("Hit!");
       this.boards[boardId].tiles[row][col].status = 'win';
       this.boards[this.player].player.hits++;
     } else {

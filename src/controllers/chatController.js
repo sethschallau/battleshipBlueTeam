@@ -18,11 +18,12 @@ exports.getChats = async (req, res) => {
 
 exports.sendChat = async (req, res) => {
 	try {
-		const { gameId, playerUserName, imageFile, note } = req.body;
+		const { gameId, playerUserName, imageFile, note = 'NA'} = req.body;
 		const chat = await Chat.findOne({ gameId });
 
 		//if empty we need a new one
 		if (!chat) {
+			console.log("hm")
 			const newChat = new Chat({
 				gameId,
 				chats: [

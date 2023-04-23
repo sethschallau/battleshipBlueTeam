@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy, ElementRef, AfterViewChecked, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, AfterViewChecked, ViewChild, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { io, Socket } from 'socket.io-client';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-chat-box',
@@ -10,7 +11,7 @@ import { io, Socket } from 'socket.io-client';
 export class ChatBoxComponent implements OnInit, OnDestroy {
   messages: any[] = [];
   newMessage: string = '';
-  gameId: string = '';
+  gameId: string | null= '';
   CloseChat: boolean = true;
   chatIsVisible: boolean = true;
   items = Array.from({ length: 100000 }).map((_, i) => `Item #${i}`);
@@ -26,13 +27,18 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
   /** The input for the form */
   @ViewChild('messageInput') messageInput: ElementRef;
 
-  constructor(private http: HttpClient, private elementRef: ElementRef) {
+  @Input() username: string;
+  
+  constructor(private http: HttpClient, private elementRef: ElementRef, private route: ActivatedRoute) {
     this.socket = io('http://localhost:3000');
   }
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.gameId = this.elementRef.nativeElement.querySelector('#gameId').textContent;
+      this.route.paramMap.subscribe(params => {
+        this.gameId = params.get('gameId');
+      });
+    
       this.socket.emit('getChats', this.gameId);
 
       this.socket.on('chatData', (data: any) => {
@@ -56,7 +62,7 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
 
   sendMessage(imageName: string): void {
     this.socket.emit('newMessage', {
-      playerUserName: this.elementRef.nativeElement.querySelector('#yourUserName').textContent,
+      playerUserName: this.username,
       imageFile: imageName,
       note: 'NA',
       gameId: this.gameId
@@ -67,7 +73,7 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
 
   sendTextMessage(): void {
     this.socket.emit('newMessage', {
-      playerUserName: this.elementRef.nativeElement.querySelector('#yourUserName').textContent,
+      playerUserName: this.username,
       imageFile: 'NA',
       note: this.newMessage,
       gameId: this.gameId
@@ -95,7 +101,7 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
     console.log(data);
     // alert("The input entered is: " + data.input);
     this.socket.emit('newMessage', {
-      playerUserName: this.elementRef.nativeElement.querySelector('#yourUserName').textContent,
+      playerUserName: this.username,
       imageFile: 'NA',
       note: data.input,
       gameId: this.gameId
