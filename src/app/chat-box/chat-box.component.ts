@@ -19,7 +19,7 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
   angryImgSrc = '../assets/emoticons/Angry.png';
   ggImgSrc = '../assets/emoticons/GG.png';
   wowImgSrc = '../assets/emoticons/Wow.png';
-
+  imageBase = '../assets/emoticons/';
 
   /** The scrollable chat view */
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
