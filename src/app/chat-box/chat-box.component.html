@@ -1,6 +1,3 @@
-<!-- <span id="gameId">643c8c139f46065d4f18ebb3</span> -->
-<!-- <span id="yourUserName">peat</span> -->
-
 <script>
   function openForm() {
     document.getElementById("myForm").style.display = "block";
@@ -21,25 +18,25 @@
       <ng-container *ngFor="let message of messages">
         <div class="message">
           <span class="playerUserName">{{ message.playerUserName }}: </span>
-          <img *ngIf="message.imageFile !== 'NA'" [src]="'../assets/emoticons/' + message.imageFile" />
+          <img *ngIf="message.imageFile !== 'NA'" [src]="'path/to/images/' + message.imageFile" />
           <p *ngIf="message.imageFile === 'NA'">{{ message.note }}</p>
         </div>
       </ng-container>
     </div>
        <div class = "chat-input emoticon-select">
-      <button class="image-button" (click)="sendMessage('../assets/emoticons/Angry.png')"> 
+      <button class="image-button" (click)="sendMessage('image1.jpg')">
         <img src= {{angryImgSrc}} alt="Angry Emoticon" />
       </button>
       
-      <button class="image-button" (click)="sendMessage('../assets/emoticons/GG.png')">
+      <button class="image-button" (click)="sendMessage('image2.jpg')">
         <img src= {{ggImgSrc}} alt="Good Game Emoticon" />
       </button>
       
-      <button class="image-button" (click)="sendMessage('../assets/emoticons/Wow.png')">
+      <button class="image-button" (click)="sendMessage('image3.jpg')">
         <img src= {{wowImgSrc}} alt="Wow Emoticon" />
       </button>
+      <input style="width: 100%; height: 50px;" #messageInput placeholder="Type message..." name="input" ngModel/>
+
       <!-- <button (click)="sendTextMessage()" class="btn">Send</button> -->
       <button type="button" class="btn cancel" name="chatMe" (click)="closeForm()">{{CloseChat?"Close":"Close"}}</button>
   </div> 
-  <input style="width: 100%; height: 50px;" #messageInput placeholder="Type message..." name="input" ngModel/>
-</form>
