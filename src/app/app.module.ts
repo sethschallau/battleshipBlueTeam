@@ -52,7 +52,7 @@ import { TutorialsComponent } from './tutorials/tutorials.component';
     BrowserAnimationsModule,
     ScrollingModule,
     MatRadioModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot()
   ],
   providers: [ 
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
