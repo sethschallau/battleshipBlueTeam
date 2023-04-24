@@ -23,6 +23,7 @@ import { ChatBoxComponent } from './chat-box/chat-box.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatRadioModule } from '@angular/material/radio';
 import {MatButtonModule} from '@angular/material/button';
+import { TutorialsComponent } from './tutorials/tutorials.component';
 
 
 
@@ -39,7 +40,8 @@ import {MatButtonModule} from '@angular/material/button';
     JoinGameComponent,
     SetShipsComponent,
     CurrentGamesComponent,
-    ChatBoxComponent
+    ChatBoxComponent,
+    TutorialsComponent
   ],
   imports: [
     BrowserModule,
