@@ -1,0 +1,109 @@
+    /* ./src/styles.css */
+
+    .container {
+        padding: 50px;
+      }
+
+    .container-fluid {
+      padding-top: 15px;
+    }
+
+    .battleship-tile {
+      color: black;
+    }
+    .win {
+      background-color: #23d160;
+      color: #fff;
+    }
+    .fail {
+      background-color: #ff3860;
+      color: #fff;
+    }
+    .ship {
+      background-color: blue;
+      color: #fff;
+    }
+    .content table td, .content table th {
+        border: 1px solid #dbdbdb;
+        padding: 0.5em 0.75em;
+        vertical-align: middle;
+        height: 50px;
+        text-align: center;
+    }
+    .content table {
+      width: 80%;
+      margin: 0 auto;
+    }
+    .content table tr:hover {
+        background-color: transparent;
+    }
+    .battleship-tile:hover {
+      cursor: pointer;
+    }
+
+    .navbar {
+      display: flex;
+      flex-direction: row;
+      height: 60px;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .nav-item:hover {
+      background-color: #7ccf838a;
+    }
+
+    a, a:link, a:hover, a:visited, a:active {
+      color: white;
+      text-decoration: none;
+    }
+
+    .dropdown-menu {
+      width: auto;
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+
+    .dropdown-menu a {
+      color: #88d18e;
+    }
+
+    .jumbotron {
+      background-color: #88d18e;
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    .jumbotron h1 {
+      color: white;
+    }
+    
+    .btn-outline-primary, .btn-outline-primary.disabled, 
+    .btn-outline-primary:disabled {
+      border-color: #97ce9c;
+      color: #97ce9c
+    }
+
+    a.btn-outline-primary {
+      color:#88d18e;
+    }
+
+    .btn-outline-primary:not(:disabled):not(.disabled):hover {
+      background-color:#97ce9c;
+      color: white;
+      border-color:#97ce9c;
+    }
+
+    .join-game-option:hover {
+      cursor: pointer;
+    }
+
+    .input-group-text {
+      justify-content: space-around;
+    }
+
+    .ship-type {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }

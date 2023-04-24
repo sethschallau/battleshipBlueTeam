@@ -1,4 +1,6 @@
-<nav class="navbar navbar-dark" style="background-color: #563D76;" *ngIf="!loginPage">
+
+
+<nav class="navbar navbar-dark" style="background-color: #97ce9c;" *ngIf="!loginPage">
   <a class="nav-item nav-link" routerLink="/home">Home</a>
   <a class="nav-item nav-link" routerLink="/current-games">My Games</a>
   <a class="nav-item dropdown">
@@ -11,6 +13,7 @@
       <a class="dropdown-item" routerLink="/join-game">Join New Game</a>
     </div>
   </a>
+  <a class="nav-item nav-link" routerLink="/tutorials">Tutorials</a>
   <a class="nav-item nav-link" (click)="logout()">Logout</a>
 
 </nav>

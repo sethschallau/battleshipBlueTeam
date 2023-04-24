@@ -19,7 +19,7 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
   angryImgSrc = '../assets/emoticons/Angry.png';
   ggImgSrc = '../assets/emoticons/GG.png';
   wowImgSrc = '../assets/emoticons/Wow.png';
-
+  imageBase = '../assets/emoticons/';
 
   /** The scrollable chat view */
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
@@ -64,7 +64,7 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
     this.socket.emit('newMessage', {
       playerUserName: this.username,
       imageFile: imageName,
-      note: 'NA',
+      "note": 'NA',
       gameId: this.gameId
     });
 
@@ -72,6 +72,7 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
   }
 
   sendTextMessage(): void {
+    console.log(this.newMessage)
     this.socket.emit('newMessage', {
       playerUserName: this.username,
       imageFile: 'NA',
@@ -98,15 +99,19 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
   }
 
   formSubmit(data: { input: any; }): void{
-    console.log(data);
-    // alert("The input entered is: " + data.input);
-    this.socket.emit('newMessage', {
-      playerUserName: this.username,
-      imageFile: 'NA',
-      note: data.input,
-      gameId: this.gameId
-    });
-    
-    this.messageInput.nativeElement.value = '';
+
+    if (data.input != ''){
+      // console.log(data);
+      // alert("The input entered is: " + data.input);
+      this.socket.emit('newMessage', {
+        playerUserName: this.username,
+        imageFile: 'NA',
+        note: data.input == '' ? " ": data.input,
+        gameId: this.gameId
+      });
+      
+      this.messageInput.nativeElement.value = '';
+    }
+
   }
 }

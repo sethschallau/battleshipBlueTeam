@@ -22,6 +22,9 @@ import { CurrentGamesComponent } from './current-games/current-games.component';
 import { ChatBoxComponent } from './chat-box/chat-box.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatRadioModule } from '@angular/material/radio';
+import {MatButtonModule} from '@angular/material/button';
+import { TutorialsComponent } from './tutorials/tutorials.component';
+
 
 
 @NgModule({
@@ -37,7 +40,8 @@ import { MatRadioModule } from '@angular/material/radio';
     JoinGameComponent,
     SetShipsComponent,
     CurrentGamesComponent,
-    ChatBoxComponent
+    ChatBoxComponent,
+    TutorialsComponent
   ],
   imports: [
     BrowserModule,
