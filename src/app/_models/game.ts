@@ -11,4 +11,5 @@ export class Game {
     ships: ShipList[];
     hits: ShotList[];
     misses: ShotList[];
+    winner: User;
 }

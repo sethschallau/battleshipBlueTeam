@@ -2,7 +2,7 @@
     <h1 class="display-4">Your Current Active Games</h1>
 </div>
 
-<section *ngIf="!noGames">
+<section *ngIf="myGames.length > 0">
 <ul class="list-group" *ngFor="let game of myGames">
     <li class="list-group-item join-game-option"
         (click)="openGame(game._id)"> {{otherPlayer(game.players)}}
@@ -10,6 +10,6 @@
 </ul>
 </section>
 
-<section *ngIf="noGames">
+<section *ngIf="myGames.length == 0">
     <h3>Currently, you don't have any ongoing games. Try starting or joining a new one!</h3>
 </section>

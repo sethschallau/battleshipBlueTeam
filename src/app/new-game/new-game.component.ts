@@ -29,7 +29,6 @@ export class NewGameComponent {
     var httpRequest = this.http.post<Game>(`${this.apiUrl}/games/create`, this.user)
     httpRequest.subscribe(
       returnedGame => {
-        console.log(returnedGame);
         this.router.navigateByUrl(`/game/${returnedGame._id}/setships`);
 
       })
