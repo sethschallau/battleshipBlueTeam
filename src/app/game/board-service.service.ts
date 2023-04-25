@@ -97,7 +97,7 @@ import { Location } from '../_models/location';
             for (let coord of misses) {
               if (coord.x == i && coord.y == j) {
                 x.shot = true;
-                x.value = "X";
+                x.value = "O";
               }
             }
             for (let coord of ships) {

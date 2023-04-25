@@ -27,7 +27,7 @@
               [style.background-color] = "(col.shot ? '' : 'transparent') && ((col.ship && board.player.username.includes(username)) ? '' : 'transparent')"
               [class.win] = "col.status == 'win'" [class.fail] = "col.status !== 'win'" [class.ship] = "col.ship && board.player.username.includes(username)"
               class="battleship-tile" id="t{{i}}{{j}}{{k}}">
-              {{ col.shot == true ? 'X' : '' }}
+              {{ col.shot == true ? col.value : '' }}
             </td>
           </tr>
         </table>
